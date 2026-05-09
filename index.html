@@ -247,6 +247,7 @@ body.theme-tiktok{
 .header-logo svg,.header-logo img{height:auto;filter:drop-shadow(0 10px 26px rgba(0,0,0,.18))}
 .logo-desktop{display:block;width:min(430px,72vw)}
 .logo-mobile{display:none;width:min(300px,80vw)}
+.logo-print{display:none}
 @media(max-width:600px){
   .logo-desktop{display:none}
   .logo-mobile{display:block}
@@ -328,7 +329,10 @@ body.theme-mercadolivre .tab-btn .tab-dot{background:rgba(0,0,0,.30)}
 @media(max-width:520px){
   .tabs{padding:6px;gap:0;max-width:100%}
   .tab-btn{padding:10px 8px;gap:6px;min-height:44px}
-  .tab-btn .tab-logo{height:18px}
+  .tab-btn .tab-logo,
+  .tab-btn[data-platform="shopee"] .tab-logo{height:18px}
+  .tab-btn[data-platform="mercadolivre"] .tab-logo{height:22px}
+  .tab-btn[data-platform="tiktok"] .tab-logo{height:16px}
   .tab-btn .tab-dot{width:4px;height:4px}
 }
 
@@ -350,10 +354,10 @@ body.theme-mercadolivre .tab-btn .tab-dot{background:rgba(0,0,0,.30)}
 .logo-bar.tiktok img{height:34px}
 .logo-bar.mercadolivre img{height:42px}
 @media(max-width:520px){
-  .logo-bar{padding:18px 16px 14px}
-  .logo-bar img{height:32px}
-  .logo-bar.tiktok img{height:28px}
-  .logo-bar.mercadolivre img{height:36px}
+  .logo-bar{padding:14px 14px 12px}
+  .logo-bar img{height:26px}
+  .logo-bar.tiktok img{height:22px}
+  .logo-bar.mercadolivre img{height:28px}
 }
 
 
@@ -1185,7 +1189,7 @@ body::after{
 .app{
   max-width:1480px;
   min-height:100vh;
-  padding:28px 28px calc(28px + var(--footer-h,86px));
+  padding:28px 28px 32px;
   display:grid;
   grid-template-columns:248px minmax(0,1fr);
   grid-template-areas:
@@ -1365,24 +1369,18 @@ body.theme-mercadolivre .header p{
   border-radius:12px;
 }
 .footer-bar{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  z-index:60;
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:18px;
+  margin-top:28px;
   padding:14px 28px;
-  border-radius:0;
-  border:0;
-  border-top:1px solid rgba(255,255,255,.30);
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.30);
   background:linear-gradient(135deg,rgba(255,255,255,.32) 0%,rgba(255,255,255,.18) 100%);
-  box-shadow:0 -10px 30px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.30);
+  box-shadow:0 14px 40px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.30);
   backdrop-filter:blur(24px);
   -webkit-backdrop-filter:blur(24px);
-  padding-bottom:calc(14px + env(safe-area-inset-bottom,0px));
 }
 body.theme-mercadolivre .footer-bar{
   background:linear-gradient(135deg,rgba(255,255,255,.62) 0%,rgba(255,255,255,.38) 100%);
@@ -1458,7 +1456,7 @@ body.theme-mercadolivre .footer-copy{
 
 @media(max-width:760px){
   .app{
-    padding:16px 12px calc(30px + var(--footer-h,140px));
+    padding:16px 12px 24px;
     gap:14px;
   }
   .header{
@@ -1496,9 +1494,10 @@ body.theme-mercadolivre .footer-copy{
     flex-direction:column;
     align-items:stretch;
     text-align:center;
-    padding:10px 14px;
-    gap:8px;
-    padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));
+    margin-top:18px;
+    padding:14px;
+    gap:10px;
+    border-radius:14px;
   }
   .footer-actions{
     justify-content:center;
@@ -1545,8 +1544,9 @@ body.theme-mercadolivre .footer-copy{
     width:auto !important;
     height:auto !important;
   }
-  .logo-desktop{ display:block !important; margin:0 auto !important; }
+  .logo-desktop{ display:none !important; }
   .logo-mobile{ display:none !important; }
+  .logo-print{ display:block !important; margin:0 auto !important; }
   .header p{
     color:var(--accent-dark) !important;
     font-weight:700 !important;
@@ -1645,6 +1645,7 @@ body.theme-mercadolivre .footer-copy{
     <div class="header-logo">
       <img class="logo-desktop" src="logo calculadora.svg" alt="Calculadora do M1lhão">
       <img class="logo-mobile" src="logo mobile.svg" alt="Calculadora do M1lhão">
+      <img class="logo-print" src="logo-pdf.svg" alt="Calculadora do M1lhão">
     </div>
     <p id="subTitle">Calcule o preço ideal <strong>Shopee</strong>, <strong>Mercado Livre</strong> e <strong>TikTokShop</strong> 2026</p>
   </header>
