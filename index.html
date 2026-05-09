@@ -1369,18 +1369,24 @@ body.theme-mercadolivre .header p{
   border-radius:12px;
 }
 .footer-bar{
+  grid-column:1 / -1;
+  min-width:0;
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:18px;
   margin-top:28px;
-  padding:14px 28px;
+  padding:18px 28px;
   border-radius:18px;
-  border:1px solid rgba(255,255,255,.30);
-  background:linear-gradient(135deg,rgba(255,255,255,.32) 0%,rgba(255,255,255,.18) 100%);
-  box-shadow:0 14px 40px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.30);
-  backdrop-filter:blur(24px);
-  -webkit-backdrop-filter:blur(24px);
+  border:1px solid rgba(255,255,255,.32);
+  background:linear-gradient(135deg,rgba(255,255,255,.22) 0%,rgba(255,255,255,.10) 100%);
+  box-shadow:0 18px 44px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.34);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+}
+.footer-copy{
+  min-width:0;
+  overflow-wrap:break-word;
 }
 body.theme-mercadolivre .footer-bar{
   background:linear-gradient(135deg,rgba(255,255,255,.62) 0%,rgba(255,255,255,.38) 100%);
