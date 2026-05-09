@@ -1,0 +1,3082 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora do M1lhão — Shopee, Mercado Livre & TikTokShop 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --orange:#EA4A16;
+  --orange-2:#FF6B33;
+  --green:#22c55e;
+  --green-2:#16a34a;
+  --green-dark:#15803d;
+  --yellow:#FFE600;
+  --yellow-2:#FFD500;
+  --yellow-dark:#a16207;
+  --pink:#FE2C55;
+  --pink-2:#FF4773;
+  --tiktok-cyan:#25F4EE;
+  --tiktok-dark:#161823;
+  --red:#ef4444;
+  --warn:#f59e0b;
+
+  --bg-card:#ffffff;
+  --bg-soft:#F7F9FC;
+  --bg-sub:#EEF2F6;
+  --border:#E4E8EE;
+  --border-strong:#D6DCE3;
+  --text-dark:#1A2233;
+  --text-mid:#5A6478;
+  --text-light:#8A94A6;
+
+  --radius:14px;
+  --radius-sm:10px;
+  --radius-xs:8px;
+  --font:'Manrope',system-ui,-apple-system,sans-serif;
+  --shadow-card:0 24px 70px rgba(21,29,48,.18),0 4px 16px rgba(21,29,48,.08);
+  --shadow-soft:0 14px 38px rgba(21,29,48,.12),0 2px 8px rgba(21,29,48,.06);
+  --surface-line:rgba(255,255,255,.58);
+
+  /* Tema dinâmico (muda por aba) */
+  --accent:#22c55e;
+  --accent-2:#16a34a;
+  --accent-dark:#15803d;
+  --accent-soft:rgba(34,197,94,.10);
+  --accent-glow:rgba(34,197,94,.35);
+}
+
+html{font-size:16px;-webkit-text-size-adjust:100%}
+
+body{
+  font-family:var(--font);
+  min-height:100vh;
+  background:#EA4A16;
+  background-image:
+    linear-gradient(135deg,rgba(255,255,255,.18) 0%,transparent 28%),
+    linear-gradient(160deg,rgba(120,24,0,.28) 0%,transparent 45%),
+    radial-gradient(ellipse 110% 74% at 50% -12%,rgba(255,194,112,.38) 0%,transparent 66%);
+  color:var(--text-dark);
+  overflow-x:hidden;
+  position:relative;
+  transition:background .5s ease,background-image .5s ease;
+}
+
+body.theme-shopee{
+  background:#EA4A16;
+  background-image:
+    linear-gradient(135deg,rgba(255,255,255,.16) 0%,transparent 31%),
+    linear-gradient(160deg,rgba(116,22,0,.28) 0%,transparent 48%),
+    radial-gradient(ellipse 112% 76% at 50% -12%,rgba(255,194,112,.40) 0%,transparent 66%);
+}
+body.theme-mercadolivre{
+  background:#FFE600;
+  background-image:
+    linear-gradient(135deg,rgba(255,255,255,.58) 0%,transparent 34%),
+    linear-gradient(160deg,rgba(45,79,140,.18) 0%,transparent 48%),
+    radial-gradient(ellipse 112% 76% at 50% -12%,rgba(255,255,255,.38) 0%,transparent 66%);
+}
+body.theme-tiktok{
+  background:#161823;
+  background-image:
+    linear-gradient(135deg,rgba(254,44,85,.22) 0%,transparent 34%),
+    linear-gradient(160deg,rgba(37,244,238,.14) 0%,transparent 48%),
+    radial-gradient(ellipse 112% 76% at 50% -12%,rgba(254,44,85,.18) 0%,transparent 66%);
+}
+
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  background-repeat:repeat;
+  background-size:200px 200px;
+  opacity:.72;
+  pointer-events:none;
+  z-index:1;
+}
+
+/* BACKGROUND ORNAMENTS */
+.platform-shapes{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:0;
+}
+.bg-blob,.bg-ribbon,.bg-dots,.bg-spark,.bg-chart{
+  position:absolute;
+  display:block;
+}
+.bg-blob{
+  display:none;
+}
+.blob-top{left:-20vw;top:-28vw;transform:rotate(-12deg)}
+.blob-bottom{right:-18vw;bottom:-28vw;transform:rotate(18deg)}
+.bg-ribbon{
+  width:78vw;
+  height:26vw;
+  min-width:760px;
+  min-height:260px;
+  border-radius:50%;
+  border-top:1.5px solid var(--line-strong);
+  border-left:1px solid var(--line-soft);
+  opacity:.38;
+  transform:rotate(-18deg);
+}
+.ribbon-1{left:-18vw;bottom:2vh}
+.ribbon-2{right:-22vw;bottom:-6vh;transform:rotate(-24deg)}
+.ribbon-2::before,.ribbon-2::after,
+.ribbon-1::before,.ribbon-1::after{
+  content:'';
+  position:absolute;
+  inset:18px 0 0 0;
+  border-radius:50%;
+  border-top:1px solid var(--line-soft);
+}
+.ribbon-1::after,.ribbon-2::after{inset:36px 0 0 0;opacity:.65}
+.bg-dots{
+  left:0;
+  top:0;
+  width:240px;
+  height:190px;
+  opacity:.26;
+  background-image:radial-gradient(circle,var(--dot) 1.6px,transparent 2px);
+  background-size:22px 22px;
+  mask-image:linear-gradient(135deg,#000 0%,rgba(0,0,0,.75) 45%,transparent 100%);
+  -webkit-mask-image:linear-gradient(135deg,#000 0%,rgba(0,0,0,.75) 45%,transparent 100%);
+}
+.bg-spark{
+  display:none;
+}
+.spark-1{left:7vw;bottom:18vh}
+.spark-2{left:72vw;top:22vh;transform:scale(1.25)}
+.bg-spark::before,.bg-spark::after{
+  content:'';
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:1px;
+  height:28px;
+  transform:translate(-50%,-50%);
+  border-radius:99px;
+  background:linear-gradient(transparent,var(--spark),transparent);
+}
+.bg-spark::after{width:28px;height:1px}
+.bg-chart{
+  right:7vw;
+  top:28vh;
+  width:300px;
+  height:170px;
+  opacity:.22;
+}
+.bg-chart svg{width:100%;height:100%;display:block;overflow:visible}
+.bg-chart path,.bg-chart line,.bg-chart circle{
+  vector-effect:non-scaling-stroke;
+  stroke:var(--chart);
+}
+.bg-chart path{fill:none;stroke-width:2}
+.bg-chart line{stroke-width:1;opacity:.28}
+.bg-chart circle{fill:var(--chart-fill);stroke-width:2}
+body.theme-shopee{
+  --shape-light:rgba(255,188,22,.42);
+  --shape-mid:rgba(255,117,0,.24);
+  --line-strong:rgba(255,213,0,.42);
+  --line-soft:rgba(255,213,0,.18);
+  --dot:rgba(255,230,0,.78);
+  --spark:#fff2a8;
+  --spark-glow:rgba(255,217,79,.45);
+  --chart:rgba(255,218,73,.76);
+  --chart-fill:rgba(234,74,22,.42);
+}
+body.theme-mercadolivre{
+  --shape-light:rgba(255,255,255,.42);
+  --shape-mid:rgba(45,79,140,.18);
+  --line-strong:rgba(45,79,140,.34);
+  --line-soft:rgba(45,79,140,.15);
+  --dot:rgba(45,79,140,.48);
+  --spark:#fff6b0;
+  --spark-glow:rgba(255,255,255,.50);
+  --chart:rgba(45,79,140,.60);
+  --chart-fill:rgba(255,230,0,.50);
+}
+body.theme-tiktok{
+  --shape-light:rgba(37,244,238,.20);
+  --shape-mid:rgba(254,44,85,.22);
+  --line-strong:rgba(37,244,238,.24);
+  --line-soft:rgba(254,44,85,.16);
+  --dot:rgba(37,244,238,.42);
+  --spark:#ffffff;
+  --spark-glow:rgba(37,244,238,.35);
+  --chart:rgba(254,44,85,.48);
+  --chart-fill:rgba(37,244,238,.26);
+}
+@media(max-width:760px){
+  .bg-blob{display:none}
+  .blob-top{left:-42vw;top:-34vw}
+  .blob-bottom{right:-48vw;bottom:-32vw}
+  .bg-ribbon{min-width:520px;min-height:210px;width:130vw;height:48vw;opacity:.24}
+  .ribbon-1{left:-58vw;bottom:9vh}
+  .ribbon-2{right:-70vw;bottom:-2vh}
+  .bg-dots{width:170px;height:140px;background-size:18px 18px;opacity:.22}
+  .bg-chart{right:-34px;top:38vh;width:190px;height:112px;opacity:.16}
+  .bg-spark{display:none}
+}
+
+.app{
+  position:relative;
+  z-index:2;
+  max-width:1180px;
+  margin:0 auto;
+  padding:30px 20px 48px;
+}
+
+/* HEADER */
+.header{
+  text-align:center;
+  margin-bottom:22px;
+  animation:fadeDown .7s ease-out both;
+}
+.header-logo{display:flex;justify-content:center;align-items:center;margin-bottom:10px}
+.header-logo svg,.header-logo img{height:auto;filter:drop-shadow(0 10px 26px rgba(0,0,0,.18))}
+.logo-desktop{display:block;width:min(430px,72vw)}
+.logo-mobile{display:none;width:min(300px,80vw)}
+@media(max-width:600px){
+  .logo-desktop{display:none}
+  .logo-mobile{display:block}
+}
+.header p{
+  display:inline-block;
+  max-width:100%;
+  color:rgba(255,255,255,.94);
+  font-size:clamp(.8rem,2vw,.94rem);
+  margin-top:2px;
+  font-weight:700;
+  padding:8px 14px;
+  border:1px solid rgba(255,255,255,.24);
+  border-radius:999px;
+  background:rgba(255,255,255,.12);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+body.theme-mercadolivre .header p{color:rgba(26,34,51,.72);border-color:rgba(26,34,51,.16);background:rgba(255,255,255,.28)}
+
+/* TABS */
+.tabs{
+  display:flex;
+  gap:6px;
+  background:rgba(255,255,255,.18);
+  backdrop-filter:blur(28px);
+  -webkit-backdrop-filter:blur(28px);
+  padding:7px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.34);
+  max-width:760px;
+  margin:0 auto 28px;
+  box-shadow:0 20px 46px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.24);
+}
+.tab-btn{
+  flex:1;
+  padding:13px 18px;
+  border:none;
+  background:transparent;
+  border-radius:10px;
+  font-family:var(--font);
+  font-size:.92rem;
+  font-weight:700;
+  color:rgba(255,255,255,.92);
+  cursor:pointer;
+  transition:background .25s ease, box-shadow .25s ease, transform .25s ease;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  letter-spacing:.005em;
+  min-height:52px;
+  position:relative;
+}
+.tab-btn .tab-dot{
+  width:6px;height:6px;
+  border-radius:50%;
+  background:rgba(255,255,255,.55);
+  flex-shrink:0;
+  transition:opacity .2s ease;
+}
+.tab-btn.active .tab-dot{display:none}
+body.theme-mercadolivre .tab-btn .tab-dot{background:rgba(0,0,0,.30)}
+.tab-btn .tab-logo{
+  height:26px;
+  width:auto;
+  display:block;
+  transition:transform .25s ease;
+}
+.tab-btn[data-platform="tiktok"] .tab-logo{height:22px}
+.tab-btn[data-platform="mercadolivre"] .tab-logo{height:30px}
+.tab-btn:hover:not(.active){background:rgba(255,255,255,.12);transform:translateY(-1px)}
+.tab-btn:hover .tab-logo{transform:scale(1.04)}
+.tab-btn.active{
+  background:#fff;
+  box-shadow:0 10px 24px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.9);
+}
+@media(max-width:520px){
+  .tabs{padding:6px;gap:0;max-width:100%}
+  .tab-btn{padding:10px 8px;gap:6px;min-height:44px}
+  .tab-btn .tab-logo{height:18px}
+  .tab-btn .tab-dot{width:4px;height:4px}
+}
+
+/* PLATFORM LOGO BAR (inside card) */
+.logo-bar{
+  padding:24px 22px 18px;
+  background:#fff;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+}
+.logo-bar img{
+  height:38px;
+  width:auto;
+  display:block;
+}
+.logo-bar.tiktok img{height:34px}
+.logo-bar.mercadolivre img{height:42px}
+@media(max-width:520px){
+  .logo-bar{padding:18px 16px 14px}
+  .logo-bar img{height:32px}
+  .logo-bar.tiktok img{height:28px}
+  .logo-bar.mercadolivre img{height:36px}
+}
+
+
+/* DASHBOARD */
+.dashboard{
+  display:grid;
+  grid-template-columns:minmax(0,1.04fr) minmax(430px,.96fr);
+  gap:24px;
+  align-items:start;
+}
+@media(max-width:980px){
+  .dashboard{grid-template-columns:1fr}
+}
+
+/* CARD */
+.card{
+  background:linear-gradient(180deg,#fff 0%,#FBFCFE 100%);
+  border-radius:var(--radius);
+  border:1px solid rgba(255,255,255,.72);
+  box-shadow:var(--shadow-card);
+  overflow:hidden;
+  position:relative;
+}
+.card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  border-radius:inherit;
+  box-shadow:inset 0 0 0 1px rgba(21,29,48,.06);
+}
+
+/* CARD HEADER (gradient bar) */
+.card-header{
+  padding:20px 24px;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.18) 0%,transparent 34%),
+    linear-gradient(135deg,var(--accent) 0%,var(--accent-2) 100%);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  position:relative;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.36),0 1px 0 rgba(21,29,48,.08);
+  overflow:hidden;
+}
+.card-header::after{
+  content:'';
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:1px;
+  background:rgba(255,255,255,.28);
+}
+.card-header h2{
+  font-size:1.08rem;
+  font-weight:800;
+  letter-spacing:0;
+  flex:1;
+  position:relative;
+  z-index:1;
+}
+.card-header .ico{
+  width:38px;height:38px;
+  background:rgba(255,255,255,.20);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;
+  font-weight:700;
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.18);
+  flex-shrink:0;
+  position:relative;
+  z-index:1;
+}
+.card-header .badge{
+  background:rgba(255,255,255,.16);
+  color:#fff;
+  font-size:.73rem;
+  font-weight:700;
+  padding:7px 14px;
+  border-radius:999px;
+  letter-spacing:.01em;
+  border:1px solid rgba(255,255,255,.28);
+  backdrop-filter:blur(8px);
+  flex-shrink:0;
+  white-space:nowrap;
+  position:relative;
+  z-index:1;
+}
+@media(max-width:520px){
+  .card-header{padding:18px 16px;gap:10px}
+  .card-header h2{font-size:.98rem}
+  .card-header .badge{font-size:.68rem;padding:6px 12px}
+  .card-header .ico{width:34px;height:34px;font-size:.95rem}
+}
+
+/* INPUT BODY */
+.card-body{
+  padding:28px 24px 24px;
+  background:linear-gradient(180deg,#fff 0%,#FBFCFE 100%);
+}
+.section-label{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:.86rem;
+  font-weight:700;
+  color:var(--text-dark);
+  margin-bottom:15px;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+.section-label .dot{
+  width:8px;height:8px;
+  border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 0 4px var(--accent-soft);
+}
+.section-label.muted .dot{background:var(--text-light);box-shadow:0 0 0 4px rgba(138,148,166,.18)}
+
+/* TOGGLE 2-up (CPF/CNPJ + others) */
+.toggle-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+  margin-bottom:18px;
+  padding:4px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:#F5F7FA;
+}
+.toggle-2 button{
+  padding:11px 14px;
+  background:transparent;
+  border:1px solid transparent;
+  border-radius:8px;
+  font-family:var(--font);
+  font-size:.92rem;
+  font-weight:700;
+  color:var(--text-mid);
+  cursor:pointer;
+  transition:all .2s ease;
+}
+.toggle-2 button.active{
+  border-color:var(--accent);
+  background:#fff;
+  color:var(--accent-dark);
+  box-shadow:0 8px 18px rgba(21,29,48,.08),0 0 0 3px var(--accent-soft);
+}
+
+/* MODE SELECTOR (3 cards) */
+.mode-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:10px;
+  margin-bottom:16px;
+}
+.mode-card{
+  padding:15px 10px;
+  background:linear-gradient(180deg,#fff 0%,#F9FAFC 100%);
+  border:1px solid var(--border);
+  border-radius:10px;
+  cursor:pointer;
+  transition:all .2s ease;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+}
+.mode-card .mc-icon{font-size:1.1rem;color:var(--text-mid);transition:color .2s}
+.mode-card .mc-title{font-size:.8rem;font-weight:700;color:var(--text-dark)}
+.mode-card .mc-sub{font-size:.68rem;color:var(--text-light);font-weight:500}
+.mode-card.active{
+  border-color:var(--accent);
+  background:linear-gradient(180deg,#fff 0%,var(--accent-soft) 100%);
+  box-shadow:0 14px 24px rgba(21,29,48,.08),0 0 0 3px var(--accent-soft);
+}
+.mode-card.active .mc-icon{color:var(--accent-dark)}
+.mode-card.active .mc-title{color:var(--accent-dark)}
+
+/* FIELD */
+.field{margin-bottom:14px}
+.field-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:14px;
+}
+@media(max-width:520px){.field-row{grid-template-columns:1fr}}
+.field label{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:.82rem;
+  font-weight:700;
+  color:var(--text-dark);
+  margin-bottom:6px;
+}
+.field label .req{color:var(--red);font-weight:700}
+.field label .ico,
+.field-hint .ico,
+.check-field .ico,
+.sub-title .ico,
+.collapse-header .ico{
+  display:inline;
+  width:auto;
+  height:auto;
+  padding:0;
+  margin:0;
+  background:none;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  opacity:.7;
+  line-height:1;
+  font-size:1em;
+}
+.field label .ico{font-size:.78rem}
+.field input,.field select{
+  width:100%;
+  padding:12px 14px;
+  background:#FBFCFE;
+  border:1px solid var(--border);
+  border-radius:var(--radius-xs);
+  font-family:var(--font);
+  font-size:.95rem;
+  font-weight:500;
+  color:var(--text-dark);
+  outline:none;
+  transition:border-color .15s,box-shadow .15s,background .15s;
+  -moz-appearance:textfield;
+  -webkit-appearance:none;
+  appearance:none;
+}
+.field input::-webkit-outer-spin-button,
+.field input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.field input:focus,.field select:focus{
+  border-color:var(--accent);
+  background:#fff;
+  box-shadow:0 0 0 3px var(--accent-soft),0 10px 24px rgba(21,29,48,.08);
+}
+.field input::placeholder{color:var(--text-light)}
+.field-hint{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  font-size:.7rem;
+  color:var(--text-light);
+  margin-top:4px;
+  font-weight:500;
+}
+.field-hint .ico{font-size:.7rem}
+
+/* CHECK FIELD */
+.check-field{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:13px 14px;
+  background:#F7F9FC;
+  border:1px solid var(--border);
+  border-radius:10px;
+  cursor:pointer;
+  margin-bottom:14px;
+  transition:all .2s ease;
+}
+.check-field > div{
+  display:flex;
+  align-items:center;
+  min-width:0;
+}
+.check-field > div > span{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+.check-field:hover{background:#F0F4F8;border-color:var(--border-strong)}
+.check-field input[type="checkbox"]{
+  appearance:none;
+  -webkit-appearance:none;
+  width:20px;height:20px;
+  border:1.5px solid var(--border-strong);
+  border-radius:5px;
+  background:#fff;
+  cursor:pointer;
+  position:relative;
+  flex-shrink:0;
+  transition:all .15s;
+}
+.check-field input[type="checkbox"]:checked{
+  background:var(--accent);
+  border-color:var(--accent);
+}
+.check-field input[type="checkbox"]:checked::after{
+  content:'✓';
+  position:absolute;
+  inset:0;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:.78rem;font-weight:800;
+}
+.check-field span{font-size:.85rem;font-weight:600;color:var(--text-dark)}
+.check-field .ico{font-size:.85rem;opacity:.55}
+
+/* KIT SUB-BOX */
+.kit-box{
+  display:none;
+  margin-top:-6px;
+  margin-bottom:14px;
+  padding:15px;
+  background:linear-gradient(180deg,var(--accent-soft) 0%,#fff 100%);
+  border:1px dashed var(--accent);
+  border-radius:10px;
+}
+.kit-box.show{display:block}
+.kit-box label{color:var(--accent-dark)}
+
+/* COLLAPSIBLE */
+.collapse{
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:#F7F9FC;
+  margin-bottom:14px;
+  overflow:hidden;
+}
+.collapse-header{
+  width:100%;
+  padding:15px 16px;
+  background:transparent;
+  border:none;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-family:var(--font);
+  font-size:.92rem;
+  font-weight:700;
+  color:var(--text-dark);
+  cursor:pointer;
+  text-align:left;
+}
+.collapse-header .arrow{transition:transform .25s ease;font-size:.7rem;color:var(--accent-dark)}
+.collapse.open .arrow{transform:rotate(180deg)}
+.collapse-body{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .35s ease;
+}
+.collapse.open .collapse-body{max-height:1200px}
+.collapse-inner{padding:7px 16px 16px;background:#fff;border-top:1px solid var(--border)}
+
+/* CUPOM TYPE TOGGLE */
+.cupom-type{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  margin-bottom:10px;
+}
+.cupom-type button{
+  padding:10px;
+  background:#FBFCFE;
+  border:1px solid var(--border);
+  border-radius:8px;
+  font-family:var(--font);
+  font-size:.82rem;
+  font-weight:700;
+  color:var(--text-mid);
+  cursor:pointer;
+  transition:all .2s;
+}
+.cupom-type button.active{
+  border-color:var(--accent);
+  background:#fff;
+  color:var(--accent-dark);
+  box-shadow:0 0 0 3px var(--accent-soft);
+}
+
+/* SUB CARD INSIDE COLLAPSE */
+.sub-card{
+  background:#FBFCFE;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:14px;
+  margin-bottom:12px;
+}
+.sub-card .sub-title{
+  display:flex;align-items:center;gap:6px;
+  font-size:.82rem;font-weight:700;
+  color:var(--text-dark);
+  margin-bottom:10px;
+}
+
+/* RESULTS */
+.results-stack{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  position:sticky;
+  top:24px;
+}
+@media(max-width:980px){
+  .results-stack{position:static}
+}
+
+/* HERO RESULT */
+.hero-result{
+  padding:30px 24px 24px;
+  text-align:center;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.94) 0%,rgba(247,249,252,.98) 100%),
+    linear-gradient(135deg,var(--accent-soft) 0%,transparent 54%);
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+  box-shadow:var(--shadow-soft);
+}
+.breakdown-card > .hero-result{
+  background:
+    radial-gradient(ellipse 90% 120% at 50% -20%,var(--accent-soft) 0%,transparent 62%),
+    linear-gradient(180deg,#fff 0%,#F8FAFD 100%) !important;
+  padding:34px 24px 28px !important;
+  border-bottom:1px solid var(--border) !important;
+}
+.hero-label{
+  font-size:.72rem;
+  font-weight:700;
+  color:var(--accent-dark);
+  text-transform:uppercase;
+  letter-spacing:.10em;
+  margin-bottom:8px;
+}
+.hero-price{
+  font-size:clamp(2.2rem,5.5vw,3.2rem);
+  font-weight:800;
+  color:var(--text-dark);
+  letter-spacing:0;
+  display:flex;
+  align-items:baseline;
+  justify-content:center;
+  gap:8px;
+}
+.hero-price .copy-btn{
+  font-size:1rem;
+  background:#fff;
+  border:1px solid var(--border);
+  width:36px;height:36px;
+  border-radius:10px;
+  cursor:pointer;
+  align-self:center;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--text-mid);
+  transition:all .2s;
+  box-shadow:0 8px 20px rgba(21,29,48,.10);
+}
+.hero-price .copy-btn:hover{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-dark)}
+.hero-price .copy-btn.copied{background:rgba(34,197,94,.15);color:var(--green-2)}
+
+.profit-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-top:14px;
+  padding:9px 16px;
+  border-radius:10px;
+  font-size:.9rem;
+  font-weight:700;
+  letter-spacing:.01em;
+}
+.profit-pill.positive{background:linear-gradient(135deg,var(--green) 0%,var(--green-2) 100%);color:#fff}
+.profit-pill.warning{background:linear-gradient(135deg,#fbbf24 0%,#f59e0b 100%);color:#fff}
+.profit-pill.negative{background:linear-gradient(135deg,#f87171 0%,#dc2626 100%);color:#fff}
+
+/* BREAKDOWN */
+.breakdown-card{
+  background:linear-gradient(180deg,#fff 0%,#FBFCFE 100%);
+  border-radius:var(--radius);
+  border:1px solid rgba(255,255,255,.72);
+  box-shadow:var(--shadow-card);
+  overflow:hidden;
+}
+.breakdown-card .card-header{
+  padding:18px 22px;
+}
+.breakdown-card .card-header h2{font-size:1rem}
+.breakdown-list{padding:6px 0 8px}
+.bd-row{
+  padding:13px 22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-size:.92rem;
+  font-weight:600;
+  color:var(--text-dark);
+  border-bottom:1px solid rgba(228,232,238,.82);
+}
+.bd-row:last-child{border-bottom:none}
+.bd-row.total{
+  font-weight:800;
+  background:linear-gradient(90deg,var(--accent-soft) 0%,#F7F9FC 68%);
+}
+.bd-row.profit{
+  font-weight:800;
+  color:var(--green-2);
+}
+.bd-row.profit .bd-val{
+  display:flex;align-items:center;gap:6px;
+}
+.bd-row.tax-warn{
+  background:rgba(239,68,68,.06);
+  color:#b91c1c;
+}
+.bd-row.info{
+  background:#F7F9FC;
+  color:var(--text-mid);
+}
+.bd-row .bd-val{font-weight:700;color:var(--text-dark)}
+.bd-row.tax-warn .bd-val{color:#b91c1c}
+.bd-row.profit .bd-val{color:var(--green-2)}
+.bd-row.info .bd-val{color:var(--text-mid)}
+
+.bd-group{
+  background:#F7F9FC;
+}
+.bd-group-header{
+  width:100%;
+  padding:13px 22px;
+  background:#F7F9FC;
+  border:none;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-family:var(--font);
+  font-size:.92rem;
+  font-weight:700;
+  color:var(--text-dark);
+  cursor:pointer;
+  text-align:left;
+  border-bottom:1px solid var(--border);
+}
+.bd-group-header .arrow{font-size:.65rem;opacity:.5;transition:transform .25s}
+.bd-group.open .bd-group-header .arrow{transform:rotate(180deg)}
+.breakdown-list.open .bd-group-header .arrow{transform:rotate(180deg)}
+.bd-group-body{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .3s ease;
+  background:#fff;
+}
+.bd-group.open .bd-group-body{max-height:600px}
+.breakdown-list.open .bd-group-body{max-height:600px}
+.bd-row.bd-sub{
+  padding-left:42px;
+  font-weight:500;
+  color:var(--text-mid);
+  font-size:.86rem;
+}
+.bd-row.bd-sub .bd-val{font-weight:600;color:var(--text-mid);font-size:.86rem}
+
+/* CHART */
+.chart-card{
+  background:linear-gradient(180deg,#fff 0%,#FBFCFE 100%);
+  border-radius:var(--radius);
+  border:1px solid rgba(255,255,255,.72);
+  box-shadow:var(--shadow-soft);
+  padding:22px;
+}
+.chart-card h3{
+  font-size:.95rem;
+  font-weight:800;
+  color:var(--text-dark);
+  margin-bottom:16px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.chart-wrap{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:18px;
+}
+.chart-canvas-wrap{position:relative;width:200px;height:200px;flex-shrink:0}
+.chart-canvas-wrap::before{
+  content:'';
+  position:absolute;
+  inset:18px;
+  border-radius:50%;
+  background:linear-gradient(180deg,#fff 0%,#F4F7FB 100%);
+  box-shadow:inset 0 1px 0 #fff,0 12px 30px rgba(21,29,48,.08);
+}
+#donutChart{width:200px;height:200px}
+.chart-center{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center;
+  pointer-events:none;
+}
+.chart-center .cc-val{font-size:1.05rem;font-weight:800;color:var(--text-dark);line-height:1}
+.chart-center .cc-lab{font-size:.6rem;color:var(--text-light);font-weight:700;margin-top:2px;text-transform:uppercase;letter-spacing:.06em}
+
+.chart-legend{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px 16px;
+  width:100%;
+}
+.legend-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:.78rem;
+  font-weight:600;
+  color:var(--text-dark);
+}
+.legend-dot{
+  width:12px;height:12px;
+  border-radius:3px;
+  flex-shrink:0;
+}
+
+/* MONTHLY PROJECTION */
+.monthly-projection{
+  display:none;
+  background:linear-gradient(180deg,#fff 0%,#FBFCFE 100%);
+  border-radius:var(--radius);
+  border:1px solid rgba(255,255,255,.72);
+  box-shadow:var(--shadow-soft);
+  padding:24px;
+}
+.monthly-projection.show{display:block}
+.monthly-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:1.05rem;
+  font-weight:800;
+  color:var(--text-dark);
+  margin-bottom:22px;
+}
+.monthly-badge{
+  width:max-content;
+  max-width:100%;
+  margin:0 auto 22px;
+  padding:8px 16px;
+  border-radius:10px;
+  background:linear-gradient(135deg,#3B82F6 0%,#2563EB 100%);
+  color:#fff;
+  font-weight:800;
+  font-size:.92rem;
+  box-shadow:0 6px 18px rgba(37,99,235,.28);
+}
+.monthly-rows{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.monthly-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:16px 18px;
+  border-radius:10px;
+  font-size:.96rem;
+  font-weight:800;
+}
+.monthly-row strong{font-size:1.05rem;white-space:nowrap}
+.monthly-row.revenue{
+  color:#1d4ed8;
+  background:rgba(59,130,246,.09);
+  border:1px solid rgba(59,130,246,.28);
+}
+.monthly-row.cost{
+  color:#b91c1c;
+  background:rgba(239,68,68,.07);
+  border:1px solid rgba(239,68,68,.25);
+}
+.monthly-row.profit{
+  color:#15803d;
+  background:rgba(34,197,94,.09);
+  border:1px solid rgba(34,197,94,.28);
+}
+.monthly-row.profit.negative{
+  color:#b91c1c;
+  background:rgba(239,68,68,.07);
+  border-color:rgba(239,68,68,.25);
+}
+.monthly-divider{
+  height:1px;
+  background:var(--border);
+  margin:22px 0 18px;
+}
+.monthly-margin{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+  text-align:center;
+  color:var(--text-mid);
+  font-weight:700;
+}
+.monthly-margin span{font-size:.95rem}
+.monthly-margin strong{
+  padding:7px 14px;
+  border-radius:9px;
+  background:linear-gradient(135deg,var(--green) 0%,var(--green-2) 100%);
+  color:#fff;
+  box-shadow:0 6px 16px rgba(34,197,94,.26);
+}
+.monthly-margin strong.negative{
+  background:linear-gradient(135deg,#f87171 0%,#dc2626 100%);
+  box-shadow:0 6px 16px rgba(220,38,38,.22);
+}
+@media(max-width:520px){
+  .monthly-projection{padding:20px 16px}
+  .monthly-row{align-items:flex-start;flex-direction:column;gap:6px;padding:14px}
+  .monthly-row strong{white-space:normal}
+}
+
+/* EXPORT */
+.btn-secondary{
+  width:100%;
+  padding:13px;
+  background:rgba(255,255,255,.94);
+  border:1px solid rgba(255,255,255,.72);
+  border-radius:var(--radius-xs);
+  font-family:var(--font);
+  font-size:.92rem;
+  font-weight:700;
+  color:var(--text-dark);
+  cursor:pointer;
+  transition:all .2s;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  box-shadow:0 12px 30px rgba(21,29,48,.12);
+}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent-dark);transform:translateY(-1px)}
+
+/* TAX TABLE COLLAPSE */
+.tax-table-wrap{margin-top:6px}
+.tax-table{width:100%;border-collapse:collapse;font-size:.78rem}
+.tax-table th{
+  text-align:left;
+  padding:8px 6px;
+  font-weight:700;
+  color:var(--text-mid);
+  border-bottom:1px solid var(--border);
+  font-size:.68rem;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+.tax-table td{
+  padding:8px 6px;
+  border-bottom:1px solid var(--border);
+  color:var(--text-dark);
+  font-weight:500;
+}
+.tax-table tr.active-row td{
+  background:var(--accent-soft);
+  font-weight:700;
+  color:var(--accent-dark);
+}
+
+/* CTA BUTTON */
+.btn-calc{
+  width:100%;
+  padding:15px;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.18) 0%,transparent 32%),
+    linear-gradient(135deg,var(--accent) 0%,var(--accent-2) 100%);
+  border:none;
+  border-radius:10px;
+  font-family:var(--font);
+  font-size:1rem;
+  font-weight:800;
+  color:#fff;
+  cursor:pointer;
+  box-shadow:0 14px 30px var(--accent-glow),inset 0 1px 0 rgba(255,255,255,.30);
+  transition:all .25s ease;
+  letter-spacing:.01em;
+  margin-top:6px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+}
+.btn-calc:hover{transform:translateY(-1px);box-shadow:0 18px 38px var(--accent-glow),inset 0 1px 0 rgba(255,255,255,.30)}
+.btn-calc:active{transform:translateY(0)}
+
+/* PLATFORM PANELS */
+.platform-panel{display:none}
+.platform-panel.active{display:grid}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-15px)}to{opacity:1;transform:translateY(0)}}
+.anim{animation:fadeUp .5s ease-out both}
+.anim-d1{animation-delay:.05s}
+.anim-d2{animation-delay:.10s}
+.anim-d3{animation-delay:.15s}
+.anim-d4{animation-delay:.20s}
+
+/* RESPONSIVE */
+@media(max-width:520px){
+  .app{padding:18px 12px 30px}
+  .card-body{padding:26px 18px 18px}
+  .hero-result{padding:22px 18px}
+  .toggle-2,.mode-grid{gap:6px}
+  .field-row{grid-template-columns:1fr}
+  .header p{white-space:normal;border-radius:12px}
+}
+
+/* REDESIGN COMPLETO */
+body{
+  background-attachment:fixed;
+}
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.10) 0%,transparent 22%,transparent 78%,rgba(0,0,0,.08) 100%),
+    linear-gradient(180deg,rgba(255,255,255,.08) 0%,transparent 34%);
+}
+.app{
+  max-width:1480px;
+  min-height:100vh;
+  padding:28px 28px calc(28px + var(--footer-h,86px));
+  display:grid;
+  grid-template-columns:248px minmax(0,1fr);
+  grid-template-areas:
+    "header header"
+    "tabs content";
+  gap:22px;
+  align-items:start;
+}
+.header{
+  grid-area:header;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  text-align:center;
+  margin:0;
+  padding:0;
+  border-radius:0;
+  border:0;
+  background:transparent;
+  box-shadow:none;
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+}
+.header-logo{
+  justify-content:center;
+  margin:0;
+  min-width:0;
+}
+.header-logo svg,.header-logo img{
+  filter:drop-shadow(0 12px 28px rgba(0,0,0,.20));
+}
+.logo-desktop{width:min(640px,72vw)}
+.header p{
+  max-width:720px;
+  margin:0;
+  padding:0;
+  text-align:center;
+  color:rgba(255,255,255,.92);
+  background:transparent;
+  border:0;
+  box-shadow:none;
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+}
+body.theme-mercadolivre .header p{
+  color:rgba(26,34,51,.72);
+  background:transparent;
+}
+.tabs{
+  grid-area:tabs;
+  position:sticky;
+  top:28px;
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:12px;
+  flex-direction:column;
+  gap:10px;
+  border-radius:18px;
+  background:linear-gradient(180deg,rgba(255,255,255,.24) 0%,rgba(255,255,255,.11) 100%);
+  border:1px solid rgba(255,255,255,.30);
+  box-shadow:0 24px 70px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.24);
+}
+.tab-btn{
+  min-height:74px;
+  padding:14px 16px;
+  justify-content:flex-start;
+  border-radius:12px;
+  overflow:hidden;
+}
+.tab-btn::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:14px;
+  bottom:14px;
+  width:3px;
+  border-radius:99px;
+  background:transparent;
+}
+.tab-btn.active::before{background:var(--accent)}
+.tab-btn.active{
+  transform:none;
+  box-shadow:0 16px 32px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.90);
+}
+.tab-btn .tab-logo{
+  max-width:132px;
+  object-fit:contain;
+}
+.tab-btn[data-platform="mercadolivre"] .tab-logo{height:32px}
+.tab-btn[data-platform="tiktok"] .tab-logo{height:24px}
+.platform-panel{
+  grid-area:content;
+  min-width:0;
+}
+.dashboard{
+  grid-template-columns:minmax(500px,1.05fr) minmax(390px,.95fr);
+  gap:22px;
+  width:100%;
+}
+.card,.breakdown-card,.chart-card,.monthly-projection{
+  border-radius:16px;
+  border-color:rgba(255,255,255,.86);
+}
+.card,.breakdown-card{
+  box-shadow:0 30px 90px rgba(21,29,48,.20),0 8px 24px rgba(21,29,48,.08);
+}
+.card-header{
+  min-height:68px;
+  padding:18px 22px;
+}
+.card-body{
+  padding:26px 22px 22px;
+}
+.section-label{
+  padding:0 0 10px;
+  margin-bottom:16px;
+  border-bottom:1px solid rgba(228,232,238,.80);
+}
+.toggle-2{
+  border-radius:14px;
+  background:#F2F5F8;
+}
+.toggle-2 button{
+  min-height:42px;
+}
+.mode-grid{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+}
+.mode-card{
+  min-height:96px;
+  justify-content:center;
+}
+.field input,.field select{
+  min-height:44px;
+}
+.check-field,.collapse,.kit-box,.sub-card{
+  border-radius:12px;
+}
+.results-stack{
+  top:28px;
+  gap:18px;
+}
+.breakdown-card > .hero-result{
+  min-height:190px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.hero-price{
+  font-size:clamp(2.55rem,4vw,3.45rem);
+}
+.profit-pill{
+  max-width:100%;
+  justify-content:center;
+}
+.chart-card{
+  padding:24px;
+}
+.chart-wrap{
+  display:grid;
+  grid-template-columns:210px minmax(0,1fr);
+  align-items:center;
+  gap:18px;
+}
+.chart-legend{
+  grid-template-columns:1fr;
+  align-content:center;
+}
+.monthly-projection{
+  padding:22px;
+}
+.btn-secondary{
+  border-radius:12px;
+}
+.footer-bar{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:60;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding:14px 28px;
+  border-radius:0;
+  border:0;
+  border-top:1px solid rgba(255,255,255,.30);
+  background:linear-gradient(135deg,rgba(255,255,255,.32) 0%,rgba(255,255,255,.18) 100%);
+  box-shadow:0 -10px 30px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.30);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  padding-bottom:calc(14px + env(safe-area-inset-bottom,0px));
+}
+body.theme-mercadolivre .footer-bar{
+  background:linear-gradient(135deg,rgba(255,255,255,.62) 0%,rgba(255,255,255,.38) 100%);
+  border-top-color:rgba(26,34,51,.12);
+}
+.footer-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.footer-link{
+  min-height:40px;
+  padding:10px 14px;
+  border:1px solid rgba(255,255,255,.34);
+  border-radius:10px;
+  background:rgba(255,255,255,.90);
+  color:var(--text-dark);
+  font-family:var(--font);
+  font-size:.84rem;
+  font-weight:800;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  box-shadow:0 10px 24px rgba(21,29,48,.10);
+  transition:transform .2s ease,border-color .2s ease,color .2s ease,background .2s ease;
+}
+.footer-link:hover{
+  transform:translateY(-1px);
+  border-color:var(--accent);
+  color:var(--accent-dark);
+  background:#fff;
+}
+.footer-copy{
+  color:rgba(255,255,255,.86);
+  font-size:.78rem;
+  font-weight:700;
+  text-align:right;
+}
+body.theme-mercadolivre .footer-copy{
+  color:rgba(26,34,51,.68);
+}
+
+@media(max-width:1280px){
+  .dashboard{
+    grid-template-columns:1fr;
+  }
+  .results-stack{
+    position:static;
+  }
+}
+
+@media(max-width:980px){
+  .app{
+    grid-template-columns:1fr;
+    grid-template-areas:
+      "header"
+      "tabs"
+      "content";
+  }
+  .tabs{
+    position:static;
+    flex-direction:row;
+    max-width:none;
+  }
+  .tab-btn{
+    justify-content:center;
+    min-height:56px;
+  }
+}
+
+@media(max-width:760px){
+  .app{
+    padding:16px 12px calc(30px + var(--footer-h,140px));
+    gap:14px;
+  }
+  .header{
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    padding:18px 14px;
+    gap:12px;
+  }
+  .header-logo{
+    justify-content:center;
+  }
+  .header p{
+    text-align:center;
+    font-size:.78rem;
+  }
+  .tabs{
+    padding:7px;
+    gap:6px;
+    border-radius:14px;
+  }
+  .tab-btn{
+    min-height:46px;
+    padding:10px 8px;
+  }
+  .tab-btn::before{display:none}
+  .card-header{
+    min-height:auto;
+  }
+  .chart-wrap{
+    display:flex;
+    flex-direction:column;
+  }
+  .footer-bar{
+    flex-direction:column;
+    align-items:stretch;
+    text-align:center;
+    padding:10px 14px;
+    gap:8px;
+    padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));
+  }
+  .footer-actions{
+    justify-content:center;
+  }
+  .footer-copy{
+    text-align:center;
+    font-size:.72rem;
+  }
+}
+
+/* PRINT — exporta apenas o resultado, com logo da Calculadora e cores da plataforma ativa */
+@media print{
+  @page{ size:A4 portrait; margin:14mm 14mm; }
+
+  *{ -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+  html,body{ background:#fff !important; }
+  body::before{ display:none !important; }
+  .platform-shapes{ display:none !important; }
+
+  /* Esconde tudo que NÃO faz parte do resultado */
+  .tabs,
+  .footer-bar,
+  .btn-calc,
+  .btn-secondary,
+  .platform-panel:not(.active),
+  .platform-panel.active > .card:first-of-type,
+  .collapse{ display:none !important; }
+
+  /* Vira layout em coluna única (só resultado) */
+  .app{ max-width:100% !important; padding:0 !important; }
+  .platform-panel.active{
+    display:block !important;
+    grid-template-columns:1fr !important;
+    gap:0 !important;
+  }
+  .results-stack{ gap:14px !important; }
+
+  /* Header / logo da Calculadora do M1lhão */
+  .header{ margin:0 0 18px !important; text-align:center; }
+  .header-logo{ margin-bottom:6px; }
+  .header-logo img{
+    filter:none !important;
+    max-width:280px !important;
+    width:auto !important;
+    height:auto !important;
+  }
+  .logo-desktop{ display:block !important; margin:0 auto !important; }
+  .logo-mobile{ display:none !important; }
+  .header p{
+    color:var(--accent-dark) !important;
+    font-weight:700 !important;
+    font-size:.9rem !important;
+  }
+  .header p strong{ color:var(--accent-dark) !important; }
+
+  /* Cards do resultado: bordas e gradientes da marca */
+  .card,.hero-result,.breakdown-card,.chart-card,.monthly-projection{
+    box-shadow:none !important;
+    border:1px solid var(--accent) !important;
+    page-break-inside:avoid;
+    break-inside:avoid;
+  }
+  .card-header{
+    background:linear-gradient(135deg,var(--accent) 0%,var(--accent-2) 100%) !important;
+    color:#fff !important;
+    padding:14px 18px !important;
+  }
+  .card-header h2{ color:#fff !important; }
+  .card-header .ico{ background:rgba(255,255,255,.25) !important; color:#fff !important; }
+
+  /* Hero (preço) */
+  .hero-result{ padding:18px !important; }
+  .hero-price{ color:var(--accent-dark) !important; }
+  .hero-label{ color:var(--accent-dark) !important; opacity:.75; }
+  .hero-price .copy-btn{ display:none !important; }
+
+  /* Profit pill mantém cor */
+  .profit-pill.positive{ background:#16a34a !important; color:#fff !important; }
+  .profit-pill.warning{  background:#f59e0b !important; color:#fff !important; }
+  .profit-pill.negative{ background:#dc2626 !important; color:#fff !important; }
+
+  /* Breakdown: linhas legíveis em PB-friendly */
+  .bd-row{ padding:9px 18px !important; font-size:.85rem !important; }
+  .bd-row.total{ background:rgba(0,0,0,.03) !important; }
+  .bd-row.profit{ color:#15803d !important; }
+  .bd-row.tax-warn{ background:rgba(239,68,68,.06) !important; color:#b91c1c !important; }
+
+  /* Grupo "Taxas da Shopee" sempre expandido na impressão */
+  .bd-group .bd-group-body{ max-height:none !important; }
+  .bd-group-header{ pointer-events:none; }
+  .bd-group-header .arrow{ display:none !important; }
+
+  /* Chart: fica compacto, com legenda em 2 colunas */
+  .chart-card{ padding:14px !important; }
+  .chart-card h3{ color:var(--accent-dark) !important; font-size:.85rem !important; margin-bottom:10px !important; }
+
+  /* Esconde elementos auxiliares dentro de results-stack que não fazem parte do PDF */
+  .results-stack > .collapse{ display:none !important; }
+  .results-stack > .btn-secondary{ display:none !important; }
+
+  /* Footer print */
+  .results-stack::after{
+    content:"Gerado por Calculadora do M1lhão · " attr(data-platform-name);
+    display:block;
+    text-align:center;
+    font-size:.7rem;
+    color:#888;
+    margin-top:14px;
+    font-weight:600;
+  }
+}
+</style>
+</head>
+<body class="theme-shopee">
+<div class="platform-shapes" aria-hidden="true">
+  <span class="bg-blob blob-top"></span>
+  <span class="bg-blob blob-bottom"></span>
+  <span class="bg-ribbon ribbon-1"></span>
+  <span class="bg-ribbon ribbon-2"></span>
+  <span class="bg-dots"></span>
+  <span class="bg-spark spark-1"></span>
+  <span class="bg-spark spark-2"></span>
+  <span class="bg-chart">
+    <svg viewBox="0 0 300 170" focusable="false">
+      <line x1="40" y1="130" x2="40" y2="112"></line>
+      <line x1="82" y1="130" x2="82" y2="100"></line>
+      <line x1="124" y1="130" x2="124" y2="84"></line>
+      <line x1="166" y1="130" x2="166" y2="62"></line>
+      <line x1="208" y1="130" x2="208" y2="46"></line>
+      <line x1="250" y1="130" x2="250" y2="26"></line>
+      <path d="M22 128 C44 132 48 104 70 106 S94 88 112 92 S134 74 150 72 S168 44 188 50 S214 30 232 36 S248 15 272 19"></path>
+      <circle cx="70" cy="106" r="7"></circle>
+      <circle cx="112" cy="92" r="7"></circle>
+      <circle cx="150" cy="72" r="7"></circle>
+      <circle cx="188" cy="50" r="7"></circle>
+      <circle cx="232" cy="36" r="7"></circle>
+      <circle cx="272" cy="19" r="7"></circle>
+    </svg>
+  </span>
+</div>
+<div class="app">
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-logo">
+      <img class="logo-desktop" src="logo calculadora.svg" alt="Calculadora do M1lhão">
+      <img class="logo-mobile" src="logo mobile.svg" alt="Calculadora do M1lhão">
+    </div>
+    <p id="subTitle">Calcule o preço ideal <strong>Shopee</strong>, <strong>Mercado Livre</strong> e <strong>TikTokShop</strong> 2026</p>
+  </header>
+
+  <!-- TABS -->
+  <div class="tabs anim">
+    <button class="tab-btn active" data-platform="shopee" onclick="switchPlatform('shopee')">
+      <span class="tab-dot"></span>
+      <img src="shopee.svg" alt="Shopee" class="tab-logo">
+    </button>
+    <button class="tab-btn" data-platform="mercadolivre" onclick="switchPlatform('mercadolivre')">
+      <span class="tab-dot"></span>
+      <img src="mercadolivre.svg" alt="Mercado Livre" class="tab-logo">
+    </button>
+    <button class="tab-btn" data-platform="tiktok" onclick="switchPlatform('tiktok')">
+      <span class="tab-dot"></span>
+      <img src="tiktok.svg" alt="TikTokShop" class="tab-logo">
+    </button>
+  </div>
+
+  <!-- ===================== SHOPEE ===================== -->
+  <div class="dashboard platform-panel active" id="panel-shopee">
+    <!-- INPUT CARD -->
+    <div class="card anim">
+      <div class="card-header">
+        <div class="ico">$</div>
+        <h2>Dados do Produto</h2>
+        <div class="badge">Novas Taxas 2026</div>
+      </div>
+      <div class="card-body">
+        <div class="section-label"><span class="dot"></span> Campos Obrigatórios</div>
+
+        <!-- TIPO VENDEDOR -->
+        <div class="field">
+          <label>Tipo de Vendedor</label>
+          <div class="toggle-2" data-platform-toggle="cnpj">
+            <button type="button" class="active" data-tax="cnpj">CNPJ</button>
+            <button type="button" data-tax="cpf">CPF</button>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label><span class="ico">📦</span> Custo do Produto unitário (R$) <span class="req">*</span></label>
+            <input type="number" data-id="custoProduto" placeholder="Ex: 4,50" step="0.01" min="0">
+          </div>
+          <div class="field">
+            <label><span class="ico">📦</span> Custo da Embalagem (R$) <span class="req">*</span></label>
+            <input type="number" data-id="custoEmbalagem" placeholder="Ex: 0,80" step="0.01" min="0" value="0">
+          </div>
+        </div>
+
+        <!-- KIT -->
+        <label class="check-field">
+          <input type="checkbox" data-id="isKit">
+          <div><span><span class="ico">📦</span> Este anúncio é um kit com múltiplos produtos?</span></div>
+        </label>
+        <div class="kit-box" data-id="kitBox">
+          <div class="field" style="margin-bottom:0">
+            <label>Quantidade de produtos no kit <span class="req">*</span></label>
+            <input type="number" data-id="kitQty" placeholder="Ex: 3 (para vender 3 camisas juntas)" step="1" min="1" value="1">
+            <div class="field-hint"><span class="ico">💡</span> O custo total será multiplicado por esta quantidade automaticamente</div>
+          </div>
+        </div>
+
+        <!-- MODE SELECTOR -->
+        <div class="field">
+          <label>Como você quer calcular o preço?</label>
+          <div class="mode-grid" data-mode-grid>
+            <button type="button" class="mode-card active" data-mode="margem">
+              <span class="mc-icon">📈</span>
+              <span class="mc-title">Margem de Lucro</span>
+              <span class="mc-sub">Define o lucro (%)</span>
+            </button>
+            <button type="button" class="mode-card" data-mode="preco">
+              <span class="mc-icon">$</span>
+              <span class="mc-title">Preço de Venda</span>
+              <span class="mc-sub">Define o preço (R$)</span>
+            </button>
+            <button type="button" class="mode-card" data-mode="lucro">
+              <span class="mc-icon">🎯</span>
+              <span class="mc-title">Lucro Desejado</span>
+              <span class="mc-sub">Define o lucro (R$)</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label data-id="dynamicLabel"><span class="ico">📈</span> Margem de Lucro Desejada (%) <span class="req">*</span></label>
+          <input type="number" data-id="dynamicInput" placeholder="ex: 30" step="0.1" min="0" value="30">
+        </div>
+
+        <div class="section-label muted" style="margin-top:24px"><span class="dot"></span> Outras Configurações</div>
+
+        <div class="field-row">
+          <div class="field">
+            <label><span class="ico">%</span> Imposto (%)</label>
+            <input type="number" data-id="imposto" placeholder="Ex: 4" step="0.1" min="0" value="4">
+            <div class="field-hint"><span class="ico">🚩</span> Valor salvo automaticamente</div>
+          </div>
+          <div class="field">
+            <label><span class="ico">📣</span> ROAS Desejado (Shopee Ads)</label>
+            <input type="number" data-id="roas" placeholder="Ex: 10 (ou deixe em branco)" step="0.1" min="0">
+            <div class="field-hint"><span class="ico">ℹ️</span> Ex: ROAS 10x reserva 10% da venda para Ads</div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label><span class="ico">🎯</span> Preço Médio do Mercado (R$)</label>
+            <input type="number" data-id="precoMercado" placeholder="Ex: 52,90" step="0.01" min="0">
+          </div>
+          <div class="field">
+            <label><span class="ico">📈</span> Vendas Estimadas deste anúncio p/ mês</label>
+            <input type="number" data-id="vendasMes" placeholder="ex: 100" step="1" min="0" value="100">
+          </div>
+        </div>
+
+        <!-- MARKETING -->
+        <div class="collapse">
+          <button type="button" class="collapse-header" onclick="toggleCollapse(this)">
+            <span><span class="ico">📣</span> Central de Marketing (Opcional)</span>
+            <span class="arrow">▲</span>
+          </button>
+          <div class="collapse-body">
+            <div class="collapse-inner">
+              <div class="field">
+                <label><span class="ico">🏷️</span> Desconto (%)</label>
+                <input type="number" data-id="desconto" placeholder="Ex: 10 (para criar a tag de promoção)" step="0.1" min="0" max="90">
+                <div class="field-hint">Instrução: Crie uma "Promoção" com este percentual dentro da Central de Marketing da Shopee.</div>
+              </div>
+
+              <div class="sub-card">
+                <div class="sub-title"><span class="ico">🎟️</span> Cupom da Loja</div>
+                <div class="cupom-type" data-cupom-type>
+                  <button type="button" class="active" data-cupom="pct">Porcentagem (%)</button>
+                  <button type="button" data-cupom="real">Valor Real (R$)</button>
+                </div>
+                <input type="number" data-id="cupomVal" placeholder="Ex: 5" step="0.01" min="0">
+                <div class="field-hint" style="margin-top:6px">Instrução: O valor será aplicado sobre o preço já com o 'Desconto' para inflar o preço final.</div>
+              </div>
+
+              <label class="check-field" style="margin-bottom:10px">
+                <input type="checkbox" data-id="campanhaDestaque">
+                <div><span>Campanhas de Destaque (+3,5% taxa)</span></div>
+              </label>
+
+              <div class="sub-card">
+                <div class="sub-title"><span class="ico">📣</span> Shopee Acelera (Opcional)</div>
+                <select data-id="acelera">
+                  <option value="0">Não uso Shopee Acelera</option>
+                  <option value="1">Loja Oficial - Grandes Marcas (1%)</option>
+                  <option value="2.5">Vendedor Indicado (2,5%)</option>
+                  <option value="3.5">Demais Vendedores (3,5%)</option>
+                </select>
+                <div class="field-hint" style="margin-top:6px"><span class="ico">💡</span> Taxa cobrada sobre o valor a receber</div>
+              </div>
+
+              <label class="check-field" style="margin-bottom:0">
+                <input type="checkbox" data-id="devolucaoFacil">
+                <div><span>Devolução Fácil Shopee (+R$ 0,49)</span></div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-calc" onclick="calc()">Calcular Agora</button>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results-stack anim anim-d2">
+      <div class="card breakdown-card">
+        <div class="card-header">
+          <div class="ico">🧮</div>
+          <h2>Resultado do Cálculo</h2>
+        </div>
+        <div class="hero-result" style="border:none;border-radius:0;box-shadow:none;border-bottom:1px solid var(--border)">
+          <div class="hero-label">PREÇO PARA CADASTRAR NA SHOPEE</div>
+          <div class="hero-price">
+            <span>R$ <span data-id="precoVal">--</span></span>
+            <button class="copy-btn" data-id="copyPriceBtn" title="Copiar preço">📋</button>
+          </div>
+          <div data-id="profitBadgeWrap"></div>
+        </div>
+
+        <div style="padding:18px 22px 4px;display:flex;align-items:center;gap:8px;font-weight:800;color:var(--text-dark)">$ Detalhamento de Custos e Taxas</div>
+
+        <div class="breakdown-list" data-id="breakdown"></div>
+      </div>
+
+      <!-- DONUT CHART -->
+      <div class="chart-card">
+        <h3>📊 Distribuição de Custos</h3>
+        <div class="chart-wrap">
+          <div class="chart-canvas-wrap">
+            <canvas id="donutChart" width="400" height="400"></canvas>
+            <div class="chart-center">
+              <span class="cc-val" data-id="ccVal">--</span>
+              <span class="cc-lab">Custo</span>
+            </div>
+          </div>
+          <div class="chart-legend" data-id="chartLegend"></div>
+        </div>
+      </div>
+
+      <div class="monthly-projection" data-id="monthlyProjection">
+        <div class="monthly-title">📈 Projeção Mensal</div>
+        <div class="monthly-badge" data-id="monthlySales">🛒 0 vendas/mês</div>
+        <div class="monthly-rows">
+          <div class="monthly-row revenue"><span>Receita Bruta (Real)</span><strong data-id="monthlyRevenue">R$ --</strong></div>
+          <div class="monthly-row cost"><span>Custos Totais</span><strong data-id="monthlyCosts">R$ --</strong></div>
+          <div class="monthly-row profit"><span>$ Lucro Líquido</span><strong data-id="monthlyProfit">R$ --</strong></div>
+        </div>
+        <div class="monthly-divider"></div>
+        <div class="monthly-margin">
+          <span>Margem de Lucro Mensal (Real)</span>
+          <strong data-id="monthlyMargin">--</strong>
+        </div>
+      </div>
+
+      <!-- TAX TABLE COLLAPSE -->
+      <div class="collapse" style="background:#fff;border-color:var(--border)">
+        <button type="button" class="collapse-header" onclick="toggleCollapse(this)" style="color:var(--text-dark)">
+          <span>📋 Detalhamento Taxas Shopee 2026</span>
+          <span class="arrow">▲</span>
+        </button>
+        <div class="collapse-body">
+          <div class="collapse-inner">
+            <table class="tax-table">
+              <thead><tr><th>Faixa</th><th>Comissão</th><th>Taxa Fixa</th><th>CPF</th><th>Pix</th></tr></thead>
+              <tbody data-id="taxTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-secondary" onclick="window.print()">📄 Exportar PDF</button>
+    </div>
+  </div>
+
+  <!-- ===================== MERCADO LIVRE ===================== -->
+  <div class="dashboard platform-panel" id="panel-mercadolivre">
+    <!-- INPUT CARD -->
+    <div class="card anim">
+      <div class="card-header">
+        <div class="ico">$</div>
+        <h2>Dados do Produto</h2>
+        <div class="badge">Taxas Mercado Livre 2026</div>
+      </div>
+      <div class="card-body">
+        <div class="section-label"><span class="dot"></span> Campos Obrigatórios</div>
+
+        <div class="field">
+          <label>Tipo de Vendedor</label>
+          <div class="toggle-2" data-platform-toggle="cnpj">
+            <button type="button" class="active" data-tax="cnpj">CNPJ</button>
+            <button type="button" data-tax="cpf">CPF</button>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label><span class="ico">📦</span> Custo do Produto unitário (R$) <span class="req">*</span></label>
+            <input type="number" data-id="custoProduto" placeholder="Ex: 4,50" step="0.01" min="0">
+          </div>
+          <div class="field">
+            <label><span class="ico">📦</span> Custo da Embalagem (R$) <span class="req">*</span></label>
+            <input type="number" data-id="custoEmbalagem" placeholder="Ex: 0,80" step="0.01" min="0" value="0">
+          </div>
+        </div>
+
+        <label class="check-field">
+          <input type="checkbox" data-id="isKit">
+          <div><span><span class="ico">📦</span> Este anúncio é um kit com múltiplos produtos?</span></div>
+        </label>
+        <div class="kit-box" data-id="kitBox">
+          <div class="field" style="margin-bottom:0">
+            <label>Quantidade de produtos no kit <span class="req">*</span></label>
+            <input type="number" data-id="kitQty" step="1" min="1" value="1">
+          </div>
+        </div>
+
+        <!-- TIPO DE ANÚNCIO -->
+        <div class="field">
+          <label>Tipo de Anúncio</label>
+          <div class="toggle-2" data-ml-tipo>
+            <button type="button" class="active" data-tipo="classico">Clássico (12%)</button>
+            <button type="button" data-tipo="premium">Premium (17%)</button>
+          </div>
+          <div class="field-hint"><span class="ico">ℹ️</span> Clássico: aparece menos. Premium: parcelamento sem juros + maior visibilidade.</div>
+        </div>
+
+        <!-- CATEGORIA -->
+        <div class="field">
+          <label>Categoria do Produto</label>
+          <select data-id="categoriaML">
+            <option value="geral">Geral / Padrão</option>
+            <option value="moda">Moda e Vestuário</option>
+            <option value="eletronico">Eletrônicos</option>
+            <option value="alimentos">Alimentos e Bebidas</option>
+            <option value="beleza">Beleza e Cuidado Pessoal</option>
+            <option value="livros">Livros</option>
+          </select>
+          <div class="field-hint"><span class="ico">ℹ️</span> A comissão pode variar levemente conforme a categoria.</div>
+        </div>
+
+        <div class="field">
+          <label>Como você quer calcular o preço?</label>
+          <div class="mode-grid" data-mode-grid>
+            <button type="button" class="mode-card active" data-mode="margem"><span class="mc-icon">📈</span><span class="mc-title">Margem de Lucro</span><span class="mc-sub">Define o lucro (%)</span></button>
+            <button type="button" class="mode-card" data-mode="preco"><span class="mc-icon">$</span><span class="mc-title">Preço de Venda</span><span class="mc-sub">Define o preço (R$)</span></button>
+            <button type="button" class="mode-card" data-mode="lucro"><span class="mc-icon">🎯</span><span class="mc-title">Lucro Desejado</span><span class="mc-sub">Define o lucro (R$)</span></button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label data-id="dynamicLabel"><span class="ico">📈</span> Margem de Lucro Desejada (%) <span class="req">*</span></label>
+          <input type="number" data-id="dynamicInput" placeholder="ex: 30" step="0.1" min="0" value="30">
+        </div>
+
+        <div class="section-label muted" style="margin-top:24px"><span class="dot"></span> Outras Configurações</div>
+
+        <div class="field-row">
+          <div class="field">
+            <label><span class="ico">%</span> Imposto (%)</label>
+            <input type="number" data-id="imposto" placeholder="Ex: 4" step="0.1" min="0" value="4">
+          </div>
+          <div class="field">
+            <label><span class="ico">📈</span> Vendas Estimadas / mês</label>
+            <input type="number" data-id="vendasMes" placeholder="ex: 100" step="1" min="0" value="100">
+          </div>
+        </div>
+
+        <!-- FRETE -->
+        <div class="collapse">
+          <button type="button" class="collapse-header" onclick="toggleCollapse(this)">
+            <span><span class="ico">🚚</span> Frete (Mercado Envios)</span>
+            <span class="arrow">▲</span>
+          </button>
+          <div class="collapse-body">
+            <div class="collapse-inner">
+              <div class="field">
+                <label>Modalidade de Frete</label>
+                <select data-id="freteML">
+                  <option value="comprador">Frete pago pelo comprador (gratuito p/ vendedor)</option>
+                  <option value="vendedor79">Frete grátis (vendedor paga, produto ≥ R$ 79)</option>
+                  <option value="full">Mercado Envios FULL (-50% no frete)</option>
+                </select>
+              </div>
+              <div class="field" style="margin-bottom:0">
+                <label>Custo de Frete estimado (R$)</label>
+                <input type="number" data-id="custoFreteML" placeholder="Ex: 18,90" step="0.01" min="0" value="0">
+                <div class="field-hint"><span class="ico">ℹ️</span> Apenas se você (vendedor) paga o frete.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-calc" onclick="calc()">Calcular Agora</button>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results-stack anim anim-d2">
+      <div class="card breakdown-card">
+        <div class="card-header">
+          <div class="ico">🧮</div>
+          <h2>Resultado do Cálculo</h2>
+        </div>
+        <div class="hero-result" style="border:none;border-radius:0;box-shadow:none;border-bottom:1px solid var(--border)">
+          <div class="hero-label">PREÇO PARA CADASTRAR NO MERCADO LIVRE</div>
+          <div class="hero-price">
+            <span>R$ <span data-id="precoVal">--</span></span>
+            <button class="copy-btn" data-id="copyPriceBtn">📋</button>
+          </div>
+          <div data-id="profitBadgeWrap"></div>
+        </div>
+        <div style="padding:18px 22px 4px;display:flex;align-items:center;gap:8px;font-weight:800;color:var(--text-dark)">$ Detalhamento de Custos e Taxas</div>
+        <div class="breakdown-list" data-id="breakdown"></div>
+      </div>
+
+      <div class="chart-card">
+        <h3>📊 Distribuição de Custos</h3>
+        <div class="chart-wrap">
+          <div class="chart-canvas-wrap">
+            <canvas id="donutChartML" width="400" height="400"></canvas>
+            <div class="chart-center">
+              <span class="cc-val" data-id="ccVal">--</span>
+              <span class="cc-lab">Custo</span>
+            </div>
+          </div>
+          <div class="chart-legend" data-id="chartLegend"></div>
+        </div>
+      </div>
+
+      <div class="monthly-projection" data-id="monthlyProjection">
+        <div class="monthly-title">📈 Projeção Mensal</div>
+        <div class="monthly-badge" data-id="monthlySales">🛒 0 vendas/mês</div>
+        <div class="monthly-rows">
+          <div class="monthly-row revenue"><span>Receita Bruta (Real)</span><strong data-id="monthlyRevenue">R$ --</strong></div>
+          <div class="monthly-row cost"><span>Custos Totais</span><strong data-id="monthlyCosts">R$ --</strong></div>
+          <div class="monthly-row profit"><span>$ Lucro Líquido</span><strong data-id="monthlyProfit">R$ --</strong></div>
+        </div>
+        <div class="monthly-divider"></div>
+        <div class="monthly-margin">
+          <span>Margem de Lucro Mensal (Real)</span>
+          <strong data-id="monthlyMargin">--</strong>
+        </div>
+      </div>
+
+      <button class="btn-secondary" onclick="window.print()">📄 Exportar PDF</button>
+    </div>
+  </div>
+
+  <!-- ===================== TIKTOK SHOP ===================== -->
+  <div class="dashboard platform-panel" id="panel-tiktok">
+    <!-- INPUT CARD -->
+    <div class="card anim">
+      <div class="card-header">
+        <div class="ico">$</div>
+        <h2>Dados do Produto</h2>
+        <div class="badge">TikTokShop Brasil 2026</div>
+      </div>
+      <div class="card-body">
+        <div class="section-label"><span class="dot"></span> Campos Obrigatórios</div>
+
+        <div class="field">
+          <label>Tipo de Vendedor</label>
+          <div class="toggle-2" data-platform-toggle="cnpj">
+            <button type="button" class="active" data-tax="cnpj">CNPJ</button>
+            <button type="button" data-tax="cpf">CPF</button>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label><span class="ico">📦</span> Custo do Produto (R$) <span class="req">*</span></label>
+            <input type="number" data-id="custoProduto" placeholder="Ex: 4,50" step="0.01" min="0">
+          </div>
+          <div class="field">
+            <label><span class="ico">📦</span> Custo da Embalagem (R$) <span class="req">*</span></label>
+            <input type="number" data-id="custoEmbalagem" placeholder="Ex: 0,80" step="0.01" min="0" value="0">
+          </div>
+        </div>
+
+        <label class="check-field">
+          <input type="checkbox" data-id="isKit">
+          <div><span><span class="ico">📦</span> Este anúncio é um kit com múltiplos produtos?</span></div>
+        </label>
+        <div class="kit-box" data-id="kitBox">
+          <div class="field" style="margin-bottom:0">
+            <label>Quantidade de produtos no kit <span class="req">*</span></label>
+            <input type="number" data-id="kitQty" step="1" min="1" value="1">
+          </div>
+        </div>
+
+        <!-- CATEGORIA TIKTOK -->
+        <div class="field">
+          <label>Categoria do Produto</label>
+          <select data-id="categoriaTT">
+            <option value="geral">Geral (5%)</option>
+            <option value="moda">Moda e Vestuário (5%)</option>
+            <option value="beleza">Beleza e Cosméticos (8%)</option>
+            <option value="eletronico">Eletrônicos (5%)</option>
+            <option value="casa">Casa e Decoração (5%)</option>
+            <option value="alimentos">Alimentos (8%)</option>
+          </select>
+          <div class="field-hint"><span class="ico">ℹ️</span> A comissão varia conforme a categoria do produto.</div>
+        </div>
+
+        <div class="field">
+          <label>Como você quer calcular o preço?</label>
+          <div class="mode-grid" data-mode-grid>
+            <button type="button" class="mode-card active" data-mode="margem"><span class="mc-icon">📈</span><span class="mc-title">Margem de Lucro</span><span class="mc-sub">Define o lucro (%)</span></button>
+            <button type="button" class="mode-card" data-mode="preco"><span class="mc-icon">$</span><span class="mc-title">Preço de Venda</span><span class="mc-sub">Define o preço (R$)</span></button>
+            <button type="button" class="mode-card" data-mode="lucro"><span class="mc-icon">🎯</span><span class="mc-title">Lucro Desejado</span><span class="mc-sub">Define o lucro (R$)</span></button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label data-id="dynamicLabel"><span class="ico">📈</span> Margem de Lucro Desejada (%) <span class="req">*</span></label>
+          <input type="number" data-id="dynamicInput" placeholder="ex: 30" step="0.1" min="0" value="30">
+        </div>
+
+        <div class="section-label muted" style="margin-top:24px"><span class="dot"></span> Outras Configurações</div>
+
+        <div class="field-row">
+          <div class="field">
+            <label><span class="ico">%</span> Imposto (%)</label>
+            <input type="number" data-id="imposto" placeholder="Ex: 4" step="0.1" min="0" value="4">
+          </div>
+          <div class="field">
+            <label><span class="ico">📈</span> Vendas Estimadas / mês</label>
+            <input type="number" data-id="vendasMes" placeholder="ex: 100" step="1" min="0" value="100">
+          </div>
+        </div>
+
+        <!-- AFFILIATE / ADS -->
+        <div class="collapse">
+          <button type="button" class="collapse-header" onclick="toggleCollapse(this)">
+            <span><span class="ico">📣</span> Afiliados & Ads (Opcional)</span>
+            <span class="arrow">▲</span>
+          </button>
+          <div class="collapse-body">
+            <div class="collapse-inner">
+              <div class="field">
+                <label><span class="ico">🤝</span> Comissão de Afiliado (%)</label>
+                <input type="number" data-id="afiliadoTT" placeholder="Ex: 10" step="0.1" min="0" max="80" value="0">
+                <div class="field-hint"><span class="ico">ℹ️</span> Percentual extra pago aos creators do TikTok que divulgarem seu produto.</div>
+              </div>
+              <div class="field" style="margin-bottom:0">
+                <label><span class="ico">🎯</span> ROAS Desejado (TikTok Ads)</label>
+                <input type="number" data-id="roasTT" placeholder="Ex: 8 (deixe em branco se não usa ads)" step="0.1" min="0">
+                <div class="field-hint"><span class="ico">ℹ️</span> Ex: ROAS 8x reserva 12,5% da venda para Ads</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FRETE -->
+        <div class="collapse">
+          <button type="button" class="collapse-header" onclick="toggleCollapse(this)">
+            <span><span class="ico">🚚</span> Frete (Opcional)</span>
+            <span class="arrow">▲</span>
+          </button>
+          <div class="collapse-body">
+            <div class="collapse-inner">
+              <div class="field" style="margin-bottom:0">
+                <label>Subsídio de Frete pago pelo vendedor (R$)</label>
+                <input type="number" data-id="custoFreteTT" placeholder="Ex: 0,00" step="0.01" min="0" value="0">
+                <div class="field-hint"><span class="ico">ℹ️</span> Custo do frete que você assume (caso ofereça frete grátis).</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-calc" onclick="calc()">Calcular Agora</button>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results-stack anim anim-d2">
+      <div class="card breakdown-card">
+        <div class="card-header">
+          <div class="ico">🧮</div>
+          <h2>Resultado do Cálculo</h2>
+        </div>
+        <div class="hero-result" style="border:none;border-radius:0;box-shadow:none;border-bottom:1px solid var(--border)">
+          <div class="hero-label">PREÇO PARA CADASTRAR NO TIKTOK SHOP</div>
+          <div class="hero-price">
+            <span>R$ <span data-id="precoVal">--</span></span>
+            <button class="copy-btn" data-id="copyPriceBtn">📋</button>
+          </div>
+          <div data-id="profitBadgeWrap"></div>
+        </div>
+        <div style="padding:18px 22px 4px;display:flex;align-items:center;gap:8px;font-weight:800;color:var(--text-dark)">$ Detalhamento de Custos e Taxas</div>
+        <div class="breakdown-list" data-id="breakdown"></div>
+      </div>
+
+      <div class="chart-card">
+        <h3>📊 Distribuição de Custos</h3>
+        <div class="chart-wrap">
+          <div class="chart-canvas-wrap">
+            <canvas id="donutChartTT" width="400" height="400"></canvas>
+            <div class="chart-center">
+              <span class="cc-val" data-id="ccVal">--</span>
+              <span class="cc-lab">Custo</span>
+            </div>
+          </div>
+          <div class="chart-legend" data-id="chartLegend"></div>
+        </div>
+      </div>
+
+      <div class="monthly-projection" data-id="monthlyProjection">
+        <div class="monthly-title">📈 Projeção Mensal</div>
+        <div class="monthly-badge" data-id="monthlySales">🛒 0 vendas/mês</div>
+        <div class="monthly-rows">
+          <div class="monthly-row revenue"><span>Receita Bruta (Real)</span><strong data-id="monthlyRevenue">R$ --</strong></div>
+          <div class="monthly-row cost"><span>Custos Totais</span><strong data-id="monthlyCosts">R$ --</strong></div>
+          <div class="monthly-row profit"><span>$ Lucro Líquido</span><strong data-id="monthlyProfit">R$ --</strong></div>
+        </div>
+        <div class="monthly-divider"></div>
+        <div class="monthly-margin">
+          <span>Margem de Lucro Mensal (Real)</span>
+          <strong data-id="monthlyMargin">--</strong>
+        </div>
+      </div>
+
+      <button class="btn-secondary" onclick="window.print()">📄 Exportar PDF</button>
+    </div>
+  </div>
+
+
+  <footer class="footer-bar" aria-label="Links de suporte e copyright">
+    <div class="footer-actions">
+      <button type="button" class="footer-link">Suporte</button>
+      <button type="button" class="footer-link">Grupo de Networking</button>
+    </div>
+    <p class="footer-copy">Copyright © Manual do M1lhão 2026. Todos os direitos reservados.</p>
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   STATE & PLATFORM CONFIG
+   ============================================================ */
+let currentPlatform = 'shopee';
+
+/* Per-platform state (persisted across tab switches) */
+const STATE = {
+  shopee:       { taxType:'cnpj', mode:'margem', cupomType:'pct' },
+  mercadolivre: { taxType:'cnpj', mode:'margem', tipo:'classico' },
+  tiktok:       { taxType:'cnpj', mode:'margem' },
+};
+
+const THEMES = {
+  shopee:       { accent:'#EA4A16', accent2:'#FF6B33', dark:'#B8380F', soft:'rgba(234,74,22,.10)', glow:'rgba(234,74,22,.35)', bodyClass:'theme-shopee' },
+  mercadolivre: { accent:'#2D4F8C', accent2:'#3B6BC4', dark:'#1E3563', soft:'rgba(45,79,140,.10)', glow:'rgba(45,79,140,.30)', bodyClass:'theme-mercadolivre' },
+  tiktok:       { accent:'#FE2C55', accent2:'#FF4773', dark:'#C61F40', soft:'rgba(254,44,85,.10)', glow:'rgba(254,44,85,.35)', bodyClass:'theme-tiktok' },
+};
+
+/* ============================================================
+   SHOPEE TAX BANDS
+   ============================================================ */
+const SHOPEE_BANDS = [
+  { min:0,   max:79.99,    comissao:0.20, fixo:4,  cpf:3, pix:0    },
+  { min:80,  max:99.99,    comissao:0.14, fixo:16, cpf:3, pix:0.05 },
+  { min:100, max:199.99,   comissao:0.14, fixo:20, cpf:3, pix:0.05 },
+  { min:200, max:499.99,   comissao:0.14, fixo:26, cpf:3, pix:0.05 },
+  { min:500, max:Infinity, comissao:0.14, fixo:26, cpf:3, pix:0.08 },
+];
+function getShopeeBand(price){
+  for(const b of SHOPEE_BANDS){ if(price>=b.min && price<=b.max) return b; }
+  return SHOPEE_BANDS[SHOPEE_BANDS.length-1];
+}
+
+/* ============================================================
+   MERCADO LIVRE FEES
+   ============================================================ */
+const ML_COMMISSION = {
+  classico: { geral:0.12, moda:0.13, eletronico:0.11, alimentos:0.13, beleza:0.13, livros:0.10 },
+  premium:  { geral:0.17, moda:0.18, eletronico:0.16, alimentos:0.18, beleza:0.18, livros:0.15 },
+};
+function getMLFixedFee(price){
+  if(price < 12.50) return 0;
+  if(price < 29)    return 6.25;
+  if(price < 50)    return 6.50;
+  if(price < 79)    return 6.75;
+  return 0;
+}
+
+/* ============================================================
+   TIKTOK SHOP FEES
+   ============================================================ */
+const TIKTOK_COMMISSION = {
+  geral:0.05, moda:0.05, beleza:0.08, eletronico:0.05, casa:0.05, alimentos:0.08,
+};
+const TIKTOK_PAYMENT_FEE = 0.03;
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function fmt(n){ return n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function fmtPct(n){ return n.toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1}); }
+function adsPctFromRoas(roas){ return roas > 0 ? 1 / roas : 0; }
+function adsCostFromRoas(revenue, roas){ return revenue * adsPctFromRoas(roas); }
+function roasLabel(roas){
+  return roas > 0 ? `ROAS ${fmtPct(roas)}x (${fmtPct(adsPctFromRoas(roas) * 100)}%)` : '';
+}
+
+function getPanel(platform){ return document.getElementById('panel-'+(platform||currentPlatform)); }
+function $(id, platform){ return getPanel(platform).querySelector('[data-id="'+id+'"]'); }
+function getNum(id, def=0){
+  const el=$(id);
+  if(!el) return def;
+  const normalized = String(el.value).replace(',','.');
+  const v=parseFloat(normalized);
+  return isNaN(v)?def:v;
+}
+function getInt(id, def=0){ const el=$(id); if(!el) return def; const v=parseInt(el.value); return isNaN(v)?def:v; }
+function getChk(id){ const el=$(id); return el ? el.checked : false; }
+function getSel(id){ const el=$(id); return el ? el.value : ''; }
+
+/* ============================================================
+   THEME / TAB SWITCH
+   ============================================================ */
+function applyTheme(platform){
+  const t = THEMES[platform];
+  document.documentElement.style.setProperty('--accent', t.accent);
+  document.documentElement.style.setProperty('--accent-2', t.accent2);
+  document.documentElement.style.setProperty('--accent-dark', t.dark);
+  document.documentElement.style.setProperty('--accent-soft', t.soft);
+  document.documentElement.style.setProperty('--accent-glow', t.glow);
+  document.body.classList.remove('theme-shopee','theme-mercadolivre','theme-tiktok');
+  document.body.classList.add(t.bodyClass);
+}
+
+const PLATFORM_NAMES = { shopee:'Shopee', mercadolivre:'Mercado Livre', tiktok:'TikTok Shop' };
+
+function switchPlatform(platform){
+  currentPlatform = platform;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.platform === platform));
+  document.querySelectorAll('.platform-panel').forEach(p => {
+    const isActive = p.id === 'panel-'+platform;
+    p.classList.toggle('active', isActive);
+    if(isActive){
+      const stack = p.querySelector('.results-stack');
+      if(stack) stack.setAttribute('data-platform-name', PLATFORM_NAMES[platform] || '');
+    }
+  });
+  applyTheme(platform);
+  calc();
+}
+
+/* ============================================================
+   UI WIRE-UP (per panel)
+   ============================================================ */
+function wirePanel(panelId, platform){
+  const panel = document.getElementById(panelId);
+
+  // Tax type toggle
+  panel.querySelectorAll('[data-platform-toggle]').forEach(group => {
+    group.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        group.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        STATE[platform].taxType = btn.dataset.tax;
+        calc();
+      });
+    });
+  });
+
+  // Mode selector
+  const modeGrid = panel.querySelector('[data-mode-grid]');
+  if(modeGrid){
+    modeGrid.querySelectorAll('.mode-card').forEach(btn => {
+      btn.addEventListener('click', () => {
+        modeGrid.querySelectorAll('.mode-card').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        STATE[platform].mode = btn.dataset.mode;
+        updateDynamicLabel(platform);
+        calc();
+      });
+    });
+  }
+
+  // ML "tipo" toggle
+  const mlTipo = panel.querySelector('[data-ml-tipo]');
+  if(mlTipo){
+    mlTipo.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        mlTipo.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        STATE.mercadolivre.tipo = btn.dataset.tipo;
+        calc();
+      });
+    });
+  }
+
+  // Cupom type toggle (Shopee)
+  const cupomGrid = panel.querySelector('[data-cupom-type]');
+  if(cupomGrid){
+    cupomGrid.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        cupomGrid.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        STATE.shopee.cupomType = btn.dataset.cupom;
+        const cupomInput = panel.querySelector('[data-id="cupomVal"]');
+        if(cupomInput) cupomInput.placeholder = btn.dataset.cupom === 'pct' ? 'Ex: 5' : 'Ex: 5,00';
+        calc();
+      });
+    });
+  }
+
+  // Kit checkbox
+  const kitChk = panel.querySelector('[data-id="isKit"]');
+  const kitBox = panel.querySelector('[data-id="kitBox"]');
+  if(kitChk && kitBox){
+    kitChk.addEventListener('change', () => {
+      kitBox.classList.toggle('show', kitChk.checked);
+      calc();
+    });
+  }
+
+  // Generic input listeners (for live calc)
+  panel.querySelectorAll('input, select').forEach(el => {
+    el.addEventListener('input', calc);
+    el.addEventListener('change', calc);
+  });
+
+  // Copy price button
+  const copyBtn = panel.querySelector('[data-id="copyPriceBtn"]');
+  if(copyBtn){
+    copyBtn.addEventListener('click', () => {
+      const v = panel.querySelector('[data-id="precoVal"]').textContent;
+      if(v && v !== '--'){
+        navigator.clipboard.writeText(v.replace(/\./g,'').replace(',','.')).then(() => {
+          copyBtn.textContent = '✓';
+          copyBtn.classList.add('copied');
+          setTimeout(() => { copyBtn.textContent = '📋'; copyBtn.classList.remove('copied'); }, 1500);
+        });
+      }
+    });
+  }
+}
+
+function updateDynamicLabel(platform){
+  const panel = getPanel(platform);
+  const lbl = panel.querySelector('[data-id="dynamicLabel"]');
+  const inp = panel.querySelector('[data-id="dynamicInput"]');
+  if(!lbl || !inp) return;
+  const m = STATE[platform].mode;
+  if(m === 'margem'){ lbl.innerHTML = '<span class="ico">📈</span> Margem de Lucro Desejada (%) <span class="req">*</span>'; inp.placeholder = 'ex: 30'; }
+  else if(m === 'preco'){ lbl.innerHTML = '<span class="ico">$</span> Preço de Venda Desejado (R$) <span class="req">*</span>'; inp.placeholder = 'ex: 150,00'; }
+  else { lbl.innerHTML = '<span class="ico">🎯</span> Lucro Desejado por Unidade (R$) <span class="req">*</span>'; inp.placeholder = 'ex: 25,00'; }
+}
+
+/* ============================================================
+   COLLAPSE
+   ============================================================ */
+function toggleCollapse(btn){
+  btn.parentElement.classList.toggle('open');
+}
+function toggleBdGroup(btn){
+  btn.parentElement.classList.toggle('open');
+}
+
+/* ============================================================
+   CORE INPUT GATHER
+   ============================================================ */
+function gatherCommonInputs(){
+  const isKit = getChk('isKit');
+  const kitQty = isKit ? Math.max(1, getInt('kitQty', 1)) : 1;
+  const custoProd = getNum('custoProduto') * kitQty;
+  const custoEmb = getNum('custoEmbalagem');
+  const imp = getNum('imposto') / 100;
+  const vendasMes = getInt('vendasMes', 0);
+  const dynVal = getNum('dynamicInput', 0);
+  const precoMercado = getNum('precoMercado');
+  return { custoProd, custoEmb, imp, vendasMes, dynVal, precoMercado, custoFixo: custoProd + custoEmb, isKit, kitQty };
+}
+
+function makeUnviableResult(platform, message){
+  const c = gatherCommonInputs();
+  const result = {
+    platform,
+    price:0,
+    precoFinal:0,
+    custoFixo:c.custoFixo,
+    imposto:0,
+    lucro:-c.custoFixo,
+    margem:0,
+    roi:0,
+    lucroMes:-c.custoFixo * c.vendasMes,
+    vendasMes:c.vendasMes,
+    precoMercado:c.precoMercado,
+    unviable:true,
+    message,
+    breakdown:{
+      custoProduto:c.custoProd,
+      custoEmbalagem:c.custoEmb,
+    },
+  };
+  if(platform === 'shopee'){
+    result.priceBase = 0;
+    result.band = SHOPEE_BANDS[0];
+    result.totalTaxasShopee = 0;
+    result.breakdown.roas = getNum('roas');
+    result.breakdown.comissao = 0;
+    result.breakdown.taxaFixa = 0;
+    result.breakdown.aceleraTaxa = 0;
+    result.breakdown.devolucaoTaxa = 0;
+    result.breakdown.custoAds = 0;
+    result.breakdown.cpfFee = 0;
+  }
+  if(platform === 'tiktok'){
+    result.band = { comissao:0, fixo:0 };
+    result.breakdown.roas = getNum('roasTT');
+    result.breakdown.comissao = 0;
+    result.breakdown.taxaPagamento = 0;
+    result.breakdown.afiliado = 0;
+    result.breakdown.custoAds = 0;
+    result.breakdown.custoFrete = getNum('custoFreteTT');
+    result.breakdown.comissaoPct = 0;
+  }
+  return result;
+}
+
+/* ============================================================
+   SHOPEE CALC
+   ============================================================ */
+function calcShopeeFromPrice(priceBase){
+  const c = gatherCommonInputs();
+  const taxType = STATE.shopee.taxType;
+
+  // Marketing — desconto cria preço final = priceBase * (1 - desconto)
+  const desconto = getNum('desconto') / 100;          // % off
+  const cupomVal = getNum('cupomVal');
+  const cupomType = STATE.shopee.cupomType;
+  const acelera = parseFloat(getSel('acelera') || '0') / 100;
+  const campanhaDestaque = getChk('campanhaDestaque');
+  const devolucaoFacil = getChk('devolucaoFacil');
+  const roas = getNum('roas');
+
+  // Preço final que o cliente paga (após desconto e cupom)
+  let priceWithDiscount = priceBase * (1 - desconto);
+  let cupomDesc = 0;
+  if(cupomType === 'pct') cupomDesc = priceWithDiscount * (cupomVal / 100);
+  else cupomDesc = cupomVal;
+  const precoFinal = Math.max(0, priceWithDiscount - cupomDesc);
+
+  // Taxas Shopee aplicadas sobre o preço final
+  const band = getShopeeBand(precoFinal);
+  let comissaoPct = band.comissao;
+  if(campanhaDestaque) comissaoPct += 0.035;
+
+  const comissao = precoFinal * comissaoPct;
+  const taxaFixa = band.fixo + (taxType === 'cpf' ? band.cpf : 0);
+  const aceleraTaxa = (precoFinal - comissao - taxaFixa) * acelera;
+  const devolucaoTaxa = devolucaoFacil ? 0.49 : 0;
+  const custoAds = adsCostFromRoas(precoFinal, roas);
+
+  const totalTaxasShopee = comissao + taxaFixa + aceleraTaxa + devolucaoTaxa;
+  const imposto = precoFinal * c.imp;
+  const lucro = precoFinal - c.custoFixo - totalTaxasShopee - custoAds - imposto;
+  const margem = precoFinal > 0 ? (lucro / precoFinal) * 100 : 0;
+  const roi = c.custoFixo > 0 ? (lucro / c.custoFixo) * 100 : 0;
+  const lucroMes = lucro * c.vendasMes;
+
+  return {
+    platform:'shopee',
+    priceBase, precoFinal, price:priceBase,
+    custoFixo:c.custoFixo, imposto, lucro, margem, roi, lucroMes, vendasMes:c.vendasMes,
+    precoMercado:c.precoMercado,
+    band, taxType,
+    breakdown:{
+      custoProduto: c.custoProd,
+      custoEmbalagem: c.custoEmb,
+      comissao, taxaFixa, aceleraTaxa, devolucaoTaxa,
+      custoAds,
+      roas,
+      desconto: priceBase - priceWithDiscount,
+      cupom: cupomDesc,
+      campanhaDestaque,
+      cpfFee: taxType === 'cpf' ? band.cpf : 0,
+    },
+    totalTaxasShopee,
+  };
+}
+
+function calcShopeeFromMargem(){
+  const c = gatherCommonInputs();
+  const margemDesejada = c.dynVal / 100;
+  const taxType = STATE.shopee.taxType;
+  const desconto = getNum('desconto') / 100;
+  const cupomVal = getNum('cupomVal');
+  const cupomType = STATE.shopee.cupomType;
+  const acelera = parseFloat(getSel('acelera') || '0') / 100;
+  const campanhaDestaque = getChk('campanhaDestaque');
+  const devolucaoFacil = getChk('devolucaoFacil');
+  const roas = getNum('roas');
+  const adsPct = adsPctFromRoas(roas);
+
+  // Iterative solve: find priceBase such that margin on precoFinal == margemDesejada
+  let priceBase = c.custoFixo * 2;
+  for(let i=0; i<35; i++){
+    let priceWithDiscount = priceBase * (1 - desconto);
+    let cupomDesc = (cupomType === 'pct') ? priceWithDiscount * (cupomVal/100) : cupomVal;
+    const precoFinal = Math.max(0.01, priceWithDiscount - cupomDesc);
+    const band = getShopeeBand(precoFinal);
+    let comissaoPct = band.comissao;
+    if(campanhaDestaque) comissaoPct += 0.035;
+    const taxaFixaFinal = band.fixo + (taxType === 'cpf' ? band.cpf : 0);
+    // precoFinal*(1 - comissaoPct - imp - margem) - taxaFixa - aceleraSomething - devolucao = custoFixo
+    // acelera incide sobre (precoFinal - comissao - taxaFixa) ≈ acelera*(precoFinal*(1-comissaoPct) - taxaFixa)
+    // simplificado: a acelera_eff ~= acelera * (1 - comissaoPct)
+    const aceleraEff = acelera * (1 - comissaoPct);
+    const denom = (1 - comissaoPct - c.imp - margemDesejada - aceleraEff - adsPct);
+    if(denom <= 0){
+      return makeUnviableResult('shopee', 'ROAS inviável para a margem desejada. A verba de Ads, taxas e impostos consomem 100% ou mais da venda.');
+    }
+    const numer = c.custoFixo + taxaFixaFinal + (devolucaoFacil ? 0.49 : 0) - acelera * taxaFixaFinal;
+    const newPrecoFinal = numer / denom;
+    // Reverter para priceBase
+    const cupomMul = cupomType === 'pct' ? (1 - cupomVal/100) : 1;
+    const cupomFix = cupomType === 'real' ? cupomVal : 0;
+    const newPriceWithDisc = (newPrecoFinal + cupomFix) / Math.max(0.01, cupomMul);
+    priceBase = newPriceWithDisc / Math.max(0.001, (1 - desconto));
+    if(priceBase < 0){ priceBase = 0; break; }
+  }
+  return calcShopeeFromPrice(Math.max(priceBase, 0.01));
+}
+
+function calcShopeeFromLucro(){
+  const c = gatherCommonInputs();
+  const lucroDesejado = c.dynVal;
+  const taxType = STATE.shopee.taxType;
+  const desconto = getNum('desconto') / 100;
+  const cupomVal = getNum('cupomVal');
+  const cupomType = STATE.shopee.cupomType;
+  const acelera = parseFloat(getSel('acelera') || '0') / 100;
+  const campanhaDestaque = getChk('campanhaDestaque');
+  const devolucaoFacil = getChk('devolucaoFacil');
+  const roas = getNum('roas');
+  const adsPct = adsPctFromRoas(roas);
+
+  let priceBase = c.custoFixo + lucroDesejado + 20;
+  for(let i=0; i<35; i++){
+    let priceWithDiscount = priceBase * (1 - desconto);
+    let cupomDesc = (cupomType === 'pct') ? priceWithDiscount * (cupomVal/100) : cupomVal;
+    const precoFinal = Math.max(0.01, priceWithDiscount - cupomDesc);
+    const band = getShopeeBand(precoFinal);
+    let comissaoPct = band.comissao;
+    if(campanhaDestaque) comissaoPct += 0.035;
+    const taxaFixaFinal = band.fixo + (taxType === 'cpf' ? band.cpf : 0);
+    const aceleraEff = acelera * (1 - comissaoPct);
+    const denom = (1 - comissaoPct - c.imp - aceleraEff - adsPct);
+    if(denom <= 0){
+      return makeUnviableResult('shopee', 'ROAS inviável para o lucro desejado. A verba de Ads, taxas e impostos consomem 100% ou mais da venda.');
+    }
+    const numer = c.custoFixo + lucroDesejado + taxaFixaFinal + (devolucaoFacil ? 0.49 : 0) - acelera * taxaFixaFinal;
+    const newPrecoFinal = numer / denom;
+    const cupomMul = cupomType === 'pct' ? (1 - cupomVal/100) : 1;
+    const cupomFix = cupomType === 'real' ? cupomVal : 0;
+    const newPriceWithDisc = (newPrecoFinal + cupomFix) / Math.max(0.01, cupomMul);
+    priceBase = newPriceWithDisc / Math.max(0.001, (1 - desconto));
+  }
+  return calcShopeeFromPrice(Math.max(priceBase, 0.01));
+}
+
+/* ============================================================
+   MERCADO LIVRE CALC
+   ============================================================ */
+function calcMLFromPrice(price){
+  const c = gatherCommonInputs();
+  const tipo = STATE.mercadolivre.tipo;
+  const categoria = getSel('categoriaML') || 'geral';
+  const comissaoPct = ML_COMMISSION[tipo][categoria] || ML_COMMISSION[tipo].geral;
+  const fixo = getMLFixedFee(price);
+  const freteMod = getSel('freteML') || 'comprador';
+  let custoFreteRaw = getNum('custoFreteML');
+  if(freteMod === 'full') custoFreteRaw *= 0.5;
+  const custoFrete = (freteMod === 'comprador') ? 0 : custoFreteRaw;
+
+  const comissao = price * comissaoPct;
+  const imposto = price * c.imp;
+  const lucro = price - c.custoFixo - comissao - fixo - imposto - custoFrete;
+  const margem = price > 0 ? (lucro / price) * 100 : 0;
+  const roi = c.custoFixo > 0 ? (lucro / c.custoFixo) * 100 : 0;
+  return {
+    platform:'mercadolivre', price, precoFinal:price,
+    custoFixo:c.custoFixo, imposto, lucro, margem, roi, lucroMes: lucro * c.vendasMes, vendasMes:c.vendasMes,
+    band:{ comissao:comissaoPct, fixo, min:0, max:Infinity },
+    breakdown:{
+      custoProduto:c.custoProd, custoEmbalagem:c.custoEmb,
+      comissao, taxaFixa:fixo, custoFrete,
+      tipo, categoria, comissaoPct,
+    },
+  };
+}
+function calcMLFromMargem(){
+  const c = gatherCommonInputs();
+  const m = c.dynVal / 100;
+  const tipo = STATE.mercadolivre.tipo;
+  const categoria = getSel('categoriaML') || 'geral';
+  const comissaoPct = ML_COMMISSION[tipo][categoria] || ML_COMMISSION[tipo].geral;
+  const freteMod = getSel('freteML') || 'comprador';
+  let custoFreteRaw = getNum('custoFreteML');
+  if(freteMod === 'full') custoFreteRaw *= 0.5;
+  const custoFrete = (freteMod === 'comprador') ? 0 : custoFreteRaw;
+
+  let price = c.custoFixo * 2;
+  for(let i=0;i<25;i++){
+    const fixo = getMLFixedFee(price);
+    const denom = 1 - comissaoPct - c.imp - m;
+    if(denom <= 0){ price = 99999; break; }
+    price = (c.custoFixo + custoFrete + fixo) / denom;
+  }
+  return calcMLFromPrice(Math.max(price, 0.01));
+}
+function calcMLFromLucro(){
+  const c = gatherCommonInputs();
+  const lucroDesejado = c.dynVal;
+  const tipo = STATE.mercadolivre.tipo;
+  const categoria = getSel('categoriaML') || 'geral';
+  const comissaoPct = ML_COMMISSION[tipo][categoria] || ML_COMMISSION[tipo].geral;
+  const freteMod = getSel('freteML') || 'comprador';
+  let custoFreteRaw = getNum('custoFreteML');
+  if(freteMod === 'full') custoFreteRaw *= 0.5;
+  const custoFrete = (freteMod === 'comprador') ? 0 : custoFreteRaw;
+
+  let price = c.custoFixo + lucroDesejado + 20;
+  for(let i=0;i<25;i++){
+    const fixo = getMLFixedFee(price);
+    const denom = 1 - comissaoPct - c.imp;
+    if(denom <= 0){ price = 99999; break; }
+    price = (c.custoFixo + lucroDesejado + custoFrete + fixo) / denom;
+  }
+  return calcMLFromPrice(Math.max(price, 0.01));
+}
+
+/* ============================================================
+   TIKTOK CALC
+   ============================================================ */
+function calcTTFromPrice(price){
+  const c = gatherCommonInputs();
+  const categoria = getSel('categoriaTT') || 'geral';
+  const comissaoPct = TIKTOK_COMMISSION[categoria] || TIKTOK_COMMISSION.geral;
+  const afiliadoPct = getNum('afiliadoTT') / 100;
+  const custoFrete = getNum('custoFreteTT');
+  const roas = getNum('roasTT');
+
+  const comissao = price * comissaoPct;
+  const taxaPagamento = price * TIKTOK_PAYMENT_FEE;
+  const afiliado = price * afiliadoPct;
+  const custoAds = adsCostFromRoas(price, roas);
+  const imposto = price * c.imp;
+  const lucro = price - c.custoFixo - comissao - taxaPagamento - afiliado - custoAds - custoFrete - imposto;
+  const margem = price > 0 ? (lucro / price) * 100 : 0;
+  const roi = c.custoFixo > 0 ? (lucro / c.custoFixo) * 100 : 0;
+  return {
+    platform:'tiktok', price, precoFinal:price,
+    custoFixo:c.custoFixo, imposto, lucro, margem, roi, lucroMes: lucro * c.vendasMes, vendasMes:c.vendasMes,
+    band:{ comissao:comissaoPct, fixo:0 },
+    breakdown:{
+      custoProduto:c.custoProd, custoEmbalagem:c.custoEmb,
+      comissao, taxaPagamento, afiliado, custoAds, custoFrete, comissaoPct, categoria, roas,
+    },
+  };
+}
+function calcTTFromMargem(){
+  const c = gatherCommonInputs();
+  const m = c.dynVal / 100;
+  const categoria = getSel('categoriaTT') || 'geral';
+  const comissaoPct = TIKTOK_COMMISSION[categoria] || TIKTOK_COMMISSION.geral;
+  const afiliadoPct = getNum('afiliadoTT') / 100;
+  const custoFrete = getNum('custoFreteTT');
+  const roas = getNum('roasTT');
+  const adsPct = adsPctFromRoas(roas);
+  const denom = 1 - comissaoPct - TIKTOK_PAYMENT_FEE - afiliadoPct - adsPct - c.imp - m;
+  if(denom <= 0){
+    return makeUnviableResult('tiktok', 'ROAS inviável para a margem desejada. Ads, taxas, afiliados e impostos consomem 100% ou mais da venda.');
+  }
+  const price = (c.custoFixo + custoFrete) / denom;
+  return calcTTFromPrice(Math.max(price, 0.01));
+}
+function calcTTFromLucro(){
+  const c = gatherCommonInputs();
+  const lucroDesejado = c.dynVal;
+  const categoria = getSel('categoriaTT') || 'geral';
+  const comissaoPct = TIKTOK_COMMISSION[categoria] || TIKTOK_COMMISSION.geral;
+  const afiliadoPct = getNum('afiliadoTT') / 100;
+  const custoFrete = getNum('custoFreteTT');
+  const roas = getNum('roasTT');
+  const adsPct = adsPctFromRoas(roas);
+  const denom = 1 - comissaoPct - TIKTOK_PAYMENT_FEE - afiliadoPct - adsPct - c.imp;
+  if(denom <= 0){
+    return makeUnviableResult('tiktok', 'ROAS inviável para o lucro desejado. Ads, taxas, afiliados e impostos consomem 100% ou mais da venda.');
+  }
+  const price = (c.custoFixo + custoFrete + lucroDesejado) / denom;
+  return calcTTFromPrice(Math.max(price, 0.01));
+}
+
+/* ============================================================
+   MAIN CALC
+   ============================================================ */
+function calc(){
+  const platform = currentPlatform;
+  const custoProd = getNum('custoProduto');
+  if(custoProd === 0 && !$('custoProduto').value){ /* still render placeholder state */ }
+
+  let result;
+  const mode = STATE[platform].mode;
+  if(platform === 'shopee'){
+    if(mode === 'margem') result = calcShopeeFromMargem();
+    else if(mode === 'preco') result = calcShopeeFromPrice(getNum('dynamicInput'));
+    else result = calcShopeeFromLucro();
+  } else if(platform === 'mercadolivre'){
+    if(mode === 'margem') result = calcMLFromMargem();
+    else if(mode === 'preco') result = calcMLFromPrice(getNum('dynamicInput'));
+    else result = calcMLFromLucro();
+  } else {
+    if(mode === 'margem') result = calcTTFromMargem();
+    else if(mode === 'preco') result = calcTTFromPrice(getNum('dynamicInput'));
+    else result = calcTTFromLucro();
+  }
+  renderResults(result);
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+function renderResults(r){
+  if(!r) return;
+  const platform = r.platform;
+  const panel = getPanel(platform);
+
+  // Hero price (precoFinal is what customer pays — but for "preço para cadastrar" use priceBase for shopee, price for others)
+  const priceCadastro = (platform === 'shopee') ? r.priceBase : r.price;
+  panel.querySelector('[data-id="precoVal"]').textContent = r.unviable ? '--' : fmt(priceCadastro);
+
+  // Profit badge
+  const wrap = panel.querySelector('[data-id="profitBadgeWrap"]');
+  const cls = r.lucro >= 0 ? (r.margem >= 15 ? 'positive' : 'warning') : 'negative';
+  wrap.innerHTML = r.unviable
+    ? `<div class="profit-pill negative">${r.message}</div>`
+    : `<div class="profit-pill ${cls}">Lucro Real: R$ ${fmt(r.lucro)} (${fmtPct(r.margem)}%)</div>`;
+
+  // Breakdown
+  renderBreakdown(panel, r);
+
+  // Donut
+  renderDonut(panel, r);
+
+  // Monthly projection
+  renderMonthlyProjection(panel, r);
+
+  // Tax table (Shopee only)
+  if(platform === 'shopee'){
+    const tbody = panel.querySelector('[data-id="taxTableBody"]');
+    if(tbody){
+      tbody.innerHTML = SHOPEE_BANDS.map(b => {
+        const isActive = b === r.band;
+        const faixa = b.max === Infinity ? `≥ R$ ${fmt(b.min)}` : `R$ ${fmt(b.min)}–R$ ${fmt(b.max)}`;
+        return `<tr class="${isActive ? 'active-row' : ''}">
+          <td>${faixa}</td>
+          <td>${fmtPct(b.comissao*100)}%</td>
+          <td>R$ ${fmt(b.fixo)}</td>
+          <td>+R$ ${fmt(b.cpf)}</td>
+          <td>${b.pix > 0 ? fmtPct(b.pix*100)+'%' : '—'}</td>
+        </tr>`;
+      }).join('');
+    }
+  }
+}
+
+function renderBreakdown(panel, r){
+  const target = panel.querySelector('[data-id="breakdown"]');
+  if(!target) return;
+  const bd = r.breakdown;
+  let rows = '';
+
+  rows += row('Custo do Produto', bd.custoProduto);
+  if(bd.custoEmbalagem > 0) rows += row('Custo da Embalagem', bd.custoEmbalagem);
+  if(r.unviable){
+    rows += `<div class="bd-row tax-warn"><span>${r.message}</span><span class="bd-val">Revise o ROAS</span></div>`;
+  }
+
+  if(r.platform === 'shopee'){
+    const totalTaxas = r.totalTaxasShopee;
+    rows += `<button type="button" class="bd-group-header" onclick="toggleBdGroup(this)">
+      <span>Taxas da Shopee</span>
+      <span style="display:inline-flex;gap:8px;align-items:center"><span style="font-weight:800">R$ ${fmt(totalTaxas)}</span><span class="arrow">▲</span></span>
+    </button>
+    <div class="bd-group">
+      <div class="bd-group-body">
+        ${row('Comissão ('+fmtPct(r.band.comissao*100 + (bd.campanhaDestaque?3.5:0))+'%)', bd.comissao, 'bd-sub')}
+        ${row('Taxa Fixa (R$ '+fmt(r.band.fixo)+')', r.band.fixo, 'bd-sub')}
+        ${bd.cpfFee>0 ? row('Adicional CPF', bd.cpfFee, 'bd-sub') : ''}
+        ${bd.aceleraTaxa>0 ? row('Shopee Acelera', bd.aceleraTaxa, 'bd-sub') : ''}
+        ${bd.devolucaoTaxa>0 ? row('Devolução Fácil', bd.devolucaoTaxa, 'bd-sub') : ''}
+      </div>
+    </div>`;
+    if(bd.custoAds > 0) rows += row('Custo de Ads Shopee ('+roasLabel(bd.roas)+')', bd.custoAds);
+    if(bd.desconto > 0) rows += row('Desconto Aplicado', -bd.desconto);
+    if(bd.cupom > 0) rows += row('Cupom da Loja', -bd.cupom);
+  }
+  else if(r.platform === 'mercadolivre'){
+    rows += row('Comissão ('+fmtPct(bd.comissaoPct*100)+'%)', bd.comissao);
+    if(bd.taxaFixa > 0) rows += row('Tarifa Fixa (preço < R$79)', bd.taxaFixa);
+    if(bd.custoFrete > 0) rows += row('Custo de Frete', bd.custoFrete);
+  }
+  else if(r.platform === 'tiktok'){
+    rows += row('Comissão TikTokShop ('+fmtPct(bd.comissaoPct*100)+'%)', bd.comissao);
+    rows += row('Taxa de Pagamento (3%)', bd.taxaPagamento);
+    if(bd.afiliado > 0) rows += row('Comissão Afiliados', bd.afiliado);
+    if(bd.custoAds > 0) rows += row('Custo de Ads TikTok ('+roasLabel(bd.roas)+')', bd.custoAds);
+    if(bd.custoFrete > 0) rows += row('Subsídio de Frete', bd.custoFrete);
+  }
+
+  rows += row('Impostos', r.imposto, 'tax-warn');
+
+  // Total + Lucro
+  const totalCustosTaxas = (bd.custoProduto || 0) + (bd.custoEmbalagem || 0)
+    + (bd.comissao || 0) + (bd.taxaFixa || 0) + (bd.aceleraTaxa || 0) + (bd.devolucaoTaxa || 0)
+    + (bd.taxaPagamento || 0) + (bd.afiliado || 0) + (bd.custoAds || 0) + (bd.custoFrete || 0)
+    + (bd.cpfFee || 0) + (r.imposto || 0);
+  rows += row('Total de Custos + Taxas', totalCustosTaxas, 'total');
+  rows += row('Lucro Líquido', r.lucro, 'profit', '📈 ');
+  if(r.platform === 'shopee' && r.precoMercado > 0){
+    rows += row('Preço Médio do Mercado', r.precoMercado, 'info');
+    rows += row('Diferença vs. Mercado', r.priceBase - r.precoMercado, 'info');
+  }
+
+  target.innerHTML = rows;
+
+  function row(label, val, cls = '', prefix = ''){
+    return `<div class="bd-row ${cls}"><span>${prefix}${label}</span><span class="bd-val">R$ ${fmt(val)}</span></div>`;
+  }
+}
+
+function renderMonthlyProjection(panel, r){
+  const card = panel.querySelector('[data-id="monthlyProjection"]');
+  if(!card) return;
+
+  if(r.unviable || !r.vendasMes || r.vendasMes <= 0){
+    card.classList.remove('show');
+    return;
+  }
+
+  const receitaMensal = r.precoFinal * r.vendasMes;
+  const lucroMensal = r.lucro * r.vendasMes;
+  const custosMensais = Math.max(0, receitaMensal - lucroMensal);
+  const margemMensal = receitaMensal > 0 ? (lucroMensal / receitaMensal) * 100 : 0;
+
+  card.classList.add('show');
+  card.querySelector('[data-id="monthlySales"]').textContent = `🛒 ${r.vendasMes} vendas/mês`;
+  card.querySelector('[data-id="monthlyRevenue"]').textContent = `R$ ${fmt(receitaMensal)}`;
+  card.querySelector('[data-id="monthlyCosts"]').textContent = `R$ ${fmt(custosMensais)}`;
+  const profitRow = card.querySelector('.monthly-row.profit');
+  const marginPill = card.querySelector('[data-id="monthlyMargin"]');
+  profitRow.classList.toggle('negative', lucroMensal < 0);
+  marginPill.classList.toggle('negative', margemMensal < 0);
+  card.querySelector('[data-id="monthlyProfit"]').textContent = `R$ ${fmt(lucroMensal)}`;
+  marginPill.textContent = `${fmtPct(margemMensal)}%`;
+}
+
+/* ============================================================
+   DONUT
+   ============================================================ */
+function donutCanvasFor(platform){
+  if(platform === 'shopee') return document.getElementById('donutChart');
+  if(platform === 'mercadolivre') return document.getElementById('donutChartML');
+  if(platform === 'tiktok') return document.getElementById('donutChartTT');
+}
+
+function renderDonut(panel, r){
+  const canvas = donutCanvasFor(r.platform);
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const size = 200;
+  canvas.width = size * dpr;
+  canvas.height = size * dpr;
+  canvas.style.width = size + 'px';
+  canvas.style.height = size + 'px';
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,size,size);
+
+  if(r.unviable){
+    ctx.beginPath(); ctx.arc(size/2,size/2,90,0,Math.PI*2); ctx.arc(size/2,size/2,50,0,Math.PI*2,true);
+    ctx.fillStyle = '#FEE2E2'; ctx.fill();
+    panel.querySelector('[data-id="ccVal"]').textContent = '--';
+    panel.querySelector('[data-id="chartLegend"]').innerHTML = '';
+    return;
+  }
+
+  const segments = buildSegments(r);
+  const total = segments.reduce((s,sg) => s + Math.max(0, sg.val), 0);
+  const cx = size/2, cy = size/2, outerR = 90, innerR = 50;
+
+  if(total <= 0){
+    ctx.beginPath(); ctx.arc(cx,cy,outerR,0,Math.PI*2); ctx.arc(cx,cy,innerR,0,Math.PI*2,true);
+    ctx.fillStyle = '#E4E8EE'; ctx.fill();
+    panel.querySelector('[data-id="ccVal"]').textContent = '--';
+    panel.querySelector('[data-id="chartLegend"]').innerHTML = '';
+    return;
+  }
+  let angle = -Math.PI/2;
+  const gap = 0.02;
+  segments.forEach(sg => {
+    if(sg.val <= 0) return;
+    const sweep = (sg.val/total) * (Math.PI*2) - gap;
+    if(sweep <= 0) return;
+    ctx.beginPath();
+    ctx.arc(cx,cy,outerR,angle,angle+sweep);
+    ctx.arc(cx,cy,innerR,angle+sweep,angle,true);
+    ctx.closePath();
+    ctx.fillStyle = sg.color;
+    ctx.fill();
+    angle += sweep + gap;
+  });
+
+  const priceCadastro = (r.platform === 'shopee') ? r.priceBase : r.price;
+  const costPct = priceCadastro > 0 ? ((priceCadastro - r.lucro) / priceCadastro * 100) : 0;
+  panel.querySelector('[data-id="ccVal"]').textContent = fmtPct(costPct) + '%';
+
+  panel.querySelector('[data-id="chartLegend"]').innerHTML = segments.map(sg =>
+    `<div class="legend-item"><span class="legend-dot" style="background:${sg.color}"></span>${sg.label}</div>`
+  ).join('');
+}
+
+function buildSegments(r){
+  const bd = r.breakdown;
+  const segs = [];
+  const C = {
+    produto:'#3B4151', embalagem:'#9CA3AF', comissao:'#D1D5DB',
+    taxaFixa:'#E5E7EB', acelera:'#A78BFA', devolucao:'#60A5FA',
+    afiliado:'#FB923C', ads:'#F472B6', frete:'#34D399',
+    impostos:'#EF4444', lucro:'#22C55E',
+  };
+  if(bd.custoProduto > 0)    segs.push({label:'Custo do Produto', val:bd.custoProduto,    color:C.produto});
+  if(bd.custoEmbalagem > 0)  segs.push({label:'Custo Embalagem',  val:bd.custoEmbalagem,  color:C.embalagem});
+  if(bd.comissao > 0)        segs.push({label:'Comissão '+(r.platform==='shopee'?'Shopee':r.platform==='mercadolivre'?'ML':'TikTokShop'), val:bd.comissao, color:C.comissao});
+  if(bd.taxaFixa > 0)        segs.push({label:'Taxa Fixa',        val:bd.taxaFixa,        color:C.taxaFixa});
+  if(bd.aceleraTaxa > 0)     segs.push({label:'Shopee Acelera',   val:bd.aceleraTaxa,     color:C.acelera});
+  if(bd.devolucaoTaxa > 0)   segs.push({label:'Devolução Fácil',  val:bd.devolucaoTaxa,   color:C.devolucao});
+  if(bd.afiliado > 0)        segs.push({label:'Afiliados',        val:bd.afiliado,        color:C.afiliado});
+  if(bd.custoAds > 0)        segs.push({label:'Ads',              val:bd.custoAds,        color:C.ads});
+  if(bd.custoFrete > 0)      segs.push({label:'Frete',            val:bd.custoFrete,      color:C.frete});
+  if(r.imposto > 0)          segs.push({label:'Impostos',         val:r.imposto,          color:C.impostos});
+  if(r.lucro > 0)            segs.push({label:'Lucro Líquido',    val:r.lucro,            color:C.lucro});
+  return segs;
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+  ['shopee','mercadolivre','tiktok'].forEach(p => wirePanel('panel-'+p, p));
+  applyTheme('shopee');
+  document.querySelector('#panel-shopee .results-stack')?.setAttribute('data-platform-name', PLATFORM_NAMES.shopee);
+  // Empty initial render so users see the structure
+  renderResults({
+    platform:'shopee', priceBase:0, precoFinal:0, price:0,
+    custoFixo:0, imposto:0, lucro:0, margem:0, roi:0, lucroMes:0, vendasMes:0,
+    band:SHOPEE_BANDS[0],
+    breakdown:{ custoProduto:0, custoEmbalagem:0, comissao:0, taxaFixa:0, aceleraTaxa:0, devolucaoTaxa:0, desconto:0, cupom:0, cpfFee:0 },
+    totalTaxasShopee:0,
+  });
+});
+</script>
+</body>
+</html>
