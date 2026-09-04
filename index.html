@@ -2112,20 +2112,6 @@ body.theme-mercadolivre .footer-copy{
           </div>
         </div>
 
-        <!-- CATEGORIA TIKTOK -->
-        <div class="field">
-          <label>Categoria do Produto</label>
-          <select data-id="categoriaTT">
-            <option value="geral">Geral (5%)</option>
-            <option value="moda">Moda e Vestuário (5%)</option>
-            <option value="beleza">Beleza e Cosméticos (8%)</option>
-            <option value="eletronico">Eletrônicos (5%)</option>
-            <option value="casa">Casa e Decoração (5%)</option>
-            <option value="alimentos">Alimentos (8%)</option>
-          </select>
-          <div class="field-hint"><span class="ico">ℹ️</span> A comissão varia conforme a categoria do produto.</div>
-        </div>
-
         <div class="field">
           <label>Como você quer calcular o preço?</label>
           <div class="mode-grid" data-mode-grid>
@@ -2244,6 +2230,22 @@ body.theme-mercadolivre .footer-copy{
         </div>
       </div>
 
+      <!-- TAX TABLE COLLAPSE -->
+      <div class="collapse" style="background:#fff;border-color:var(--border)">
+        <button type="button" class="collapse-header" onclick="toggleCollapse(this)" style="color:var(--text-dark)">
+          <span>📋 Detalhamento Taxas TikTokShop</span>
+          <span class="arrow">▲</span>
+        </button>
+        <div class="collapse-body">
+          <div class="collapse-inner">
+            <table class="tax-table">
+              <thead><tr><th>Faixa</th><th>Comissão</th><th>Taxa Fixa</th><th>Frete Grátis</th></tr></thead>
+              <tbody data-id="taxTableBodyTT"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
       <button class="btn-secondary" onclick="window.print()">📄 Exportar PDF</button>
     </div>
   </div>
@@ -2310,10 +2312,12 @@ function getMLFixedFee(price){
 /* ============================================================
    TIKTOK SHOP FEES
    ============================================================ */
-const TIKTOK_COMMISSION = {
-  geral:0.05, moda:0.05, beleza:0.08, eletronico:0.05, casa:0.05, alimentos:0.08,
-};
-const TIKTOK_PAYMENT_FEE = 0.03;
+const TIKTOK_BANDS = [
+  { min:0,  max:49.99,    comissao:0.10, fixo:4 },
+  { min:50, max:Infinity, comissao:0.06, fixo:6 },
+];
+const TIKTOK_FRETE_GRATIS = 0.06; /* taxa do programa de frete grátis, sobre o preço, nas duas faixas */
+function getTikTokBand(price){ return price < 50 ? TIKTOK_BANDS[0] : TIKTOK_BANDS[1]; }
 
 /* ============================================================
    HELPERS
@@ -2535,7 +2539,8 @@ function makeUnviableResult(platform, message){
     result.band = { comissao:0, fixo:0 };
     result.breakdown.roas = getNum('roasTT');
     result.breakdown.comissao = 0;
-    result.breakdown.taxaPagamento = 0;
+    result.breakdown.taxaFixa = 0;
+    result.breakdown.freteGratis = 0;
     result.breakdown.afiliado = 0;
     result.breakdown.custoAds = 0;
     result.breakdown.custoFrete = getNum('custoFreteTT');
@@ -2762,60 +2767,69 @@ function calcMLFromLucro(){
    ============================================================ */
 function calcTTFromPrice(price){
   const c = gatherCommonInputs();
-  const categoria = getSel('categoriaTT') || 'geral';
-  const comissaoPct = TIKTOK_COMMISSION[categoria] || TIKTOK_COMMISSION.geral;
+  const band = getTikTokBand(price);
+  const comissaoPct = band.comissao;
   const afiliadoPct = getNum('afiliadoTT') / 100;
   const custoFrete = getNum('custoFreteTT');
   const roas = getNum('roasTT');
 
   const comissao = price * comissaoPct;
-  const taxaPagamento = price * TIKTOK_PAYMENT_FEE;
+  const taxaFixa = band.fixo;
+  const freteGratis = price * TIKTOK_FRETE_GRATIS;
   const afiliado = price * afiliadoPct;
   const custoAds = adsCostFromRoas(price, roas);
   const imposto = price * c.imp;
-  const lucro = price - c.custoFixo - comissao - taxaPagamento - afiliado - custoAds - custoFrete - imposto;
+  const lucro = price - c.custoFixo - comissao - taxaFixa - freteGratis - afiliado - custoAds - custoFrete - imposto;
   const margem = price > 0 ? (lucro / price) * 100 : 0;
   const roi = c.custoFixo > 0 ? (lucro / c.custoFixo) * 100 : 0;
   return {
     platform:'tiktok', price, precoFinal:price,
     custoFixo:c.custoFixo, imposto, lucro, margem, roi, lucroMes: lucro * c.vendasMes, vendasMes:c.vendasMes,
-    band:{ comissao:comissaoPct, fixo:0 },
+    band,
     breakdown:{
       custoProduto:c.custoProd, custoEmbalagem:c.custoEmb,
-      comissao, taxaPagamento, afiliado, custoAds, custoFrete, comissaoPct, categoria, roas,
+      comissao, taxaFixa, freteGratis, afiliado, custoAds, custoFrete, comissaoPct, roas,
     },
   };
+}
+/* Resolve o preço por faixa: tenta a faixa < R$50; se o preço resultante estoura a faixa,
+   usa a faixa ≥ R$50 (nunca abaixo de R$50, onde a comissão de 10% se aplicaria). */
+function solveTTPrice(extraFixo, pctExtra){
+  const [b1, b2] = TIKTOK_BANDS;
+  const d1 = 1 - b1.comissao - TIKTOK_FRETE_GRATIS - pctExtra;
+  if(d1 > 0){
+    const p1 = (extraFixo + b1.fixo) / d1;
+    if(p1 < 50) return p1;
+  }
+  const d2 = 1 - b2.comissao - TIKTOK_FRETE_GRATIS - pctExtra;
+  if(d2 <= 0) return null;
+  const p2 = (extraFixo + b2.fixo) / d2;
+  return Math.max(p2, 50);
 }
 function calcTTFromMargem(){
   const c = gatherCommonInputs();
   const m = c.dynVal / 100;
-  const categoria = getSel('categoriaTT') || 'geral';
-  const comissaoPct = TIKTOK_COMMISSION[categoria] || TIKTOK_COMMISSION.geral;
   const afiliadoPct = getNum('afiliadoTT') / 100;
   const custoFrete = getNum('custoFreteTT');
   const roas = getNum('roasTT');
   const adsPct = adsPctFromRoas(roas);
-  const denom = 1 - comissaoPct - TIKTOK_PAYMENT_FEE - afiliadoPct - adsPct - c.imp - m;
-  if(denom <= 0){
+  const price = solveTTPrice(c.custoFixo + custoFrete, afiliadoPct + adsPct + c.imp + m);
+  if(price === null){
     return makeUnviableResult('tiktok', 'ROAS inviável para a margem desejada. Ads, taxas, afiliados e impostos consomem 100% ou mais da venda.');
   }
-  const price = (c.custoFixo + custoFrete) / denom;
   return calcTTFromPrice(Math.max(price, 0.01));
 }
 function calcTTFromLucro(){
   const c = gatherCommonInputs();
   const lucroDesejado = c.dynVal;
-  const categoria = getSel('categoriaTT') || 'geral';
-  const comissaoPct = TIKTOK_COMMISSION[categoria] || TIKTOK_COMMISSION.geral;
   const afiliadoPct = getNum('afiliadoTT') / 100;
   const custoFrete = getNum('custoFreteTT');
   const roas = getNum('roasTT');
   const adsPct = adsPctFromRoas(roas);
-  const denom = 1 - comissaoPct - TIKTOK_PAYMENT_FEE - afiliadoPct - adsPct - c.imp;
-  if(denom <= 0){
+  const price = solveTTPrice(c.custoFixo + custoFrete + lucroDesejado, afiliadoPct + adsPct + c.imp);
+  if(price === null){
     return makeUnviableResult('tiktok', 'ROAS inviável para o lucro desejado. Ads, taxas, afiliados e impostos consomem 100% ou mais da venda.');
   }
-  const price = (c.custoFixo + custoFrete + lucroDesejado) / denom;
   return calcTTFromPrice(Math.max(price, 0.01));
 }
 
@@ -2872,6 +2886,23 @@ function renderResults(r){
 
   // Monthly projection
   renderMonthlyProjection(panel, r);
+
+  // Tax table (TikTok)
+  if(platform === 'tiktok'){
+    const tbody = panel.querySelector('[data-id="taxTableBodyTT"]');
+    if(tbody){
+      tbody.innerHTML = TIKTOK_BANDS.map(b => {
+        const isActive = b === r.band;
+        const faixa = b.max === Infinity ? `≥ R$ ${fmt(b.min)}` : `< R$ ${fmt(Math.ceil(b.max))}`;
+        return `<tr class="${isActive ? 'active-row' : ''}">
+          <td>${faixa}</td>
+          <td>${fmtPct(b.comissao*100)}%</td>
+          <td>R$ ${fmt(b.fixo)}</td>
+          <td>+${fmtPct(TIKTOK_FRETE_GRATIS*100)}%</td>
+        </tr>`;
+      }).join('');
+    }
+  }
 
   // Tax table (Shopee only)
   if(platform === 'shopee'){
@@ -2930,7 +2961,8 @@ function renderBreakdown(panel, r){
   }
   else if(r.platform === 'tiktok'){
     rows += row('Comissão TikTokShop ('+fmtPct(bd.comissaoPct*100)+'%)', bd.comissao);
-    rows += row('Taxa de Pagamento (3%)', bd.taxaPagamento);
+    rows += row('Taxa Fixa (R$ '+fmt(r.band.fixo)+')', bd.taxaFixa);
+    rows += row('Taxa de Frete Grátis ('+fmtPct(TIKTOK_FRETE_GRATIS*100)+'%)', bd.freteGratis);
     if(bd.afiliado > 0) rows += row('Comissão Afiliados', bd.afiliado);
     if(bd.custoAds > 0) rows += row('Custo de Ads TikTok ('+roasLabel(bd.roas)+')', bd.custoAds);
     if(bd.custoFrete > 0) rows += row('Subsídio de Frete', bd.custoFrete);
@@ -2939,10 +2971,11 @@ function renderBreakdown(panel, r){
   rows += row('Impostos', r.imposto, 'tax-warn');
 
   // Total + Lucro
+  /* bd.taxaFixa já inclui o adicional de CPF (Shopee) — não somar bd.cpfFee de novo */
   const totalCustosTaxas = (bd.custoProduto || 0) + (bd.custoEmbalagem || 0)
     + (bd.comissao || 0) + (bd.taxaFixa || 0) + (bd.aceleraTaxa || 0) + (bd.devolucaoTaxa || 0)
-    + (bd.taxaPagamento || 0) + (bd.afiliado || 0) + (bd.custoAds || 0) + (bd.custoFrete || 0)
-    + (bd.cpfFee || 0) + (r.imposto || 0);
+    + (bd.freteGratis || 0) + (bd.afiliado || 0) + (bd.custoAds || 0) + (bd.custoFrete || 0)
+    + (r.imposto || 0);
   rows += row('Total de Custos + Taxas', totalCustosTaxas, 'total');
   rows += row('Lucro Líquido', r.lucro, 'profit', '📈 ');
   if(r.platform === 'shopee' && r.precoMercado > 0){
@@ -3054,13 +3087,14 @@ function buildSegments(r){
   const C = {
     produto:'#3B4151', embalagem:'#9CA3AF', comissao:'#D1D5DB',
     taxaFixa:'#E5E7EB', acelera:'#A78BFA', devolucao:'#60A5FA',
-    afiliado:'#FB923C', ads:'#F472B6', frete:'#34D399',
+    freteGratis:'#FBBF24', afiliado:'#FB923C', ads:'#F472B6', frete:'#34D399',
     impostos:'#EF4444', lucro:'#22C55E',
   };
   if(bd.custoProduto > 0)    segs.push({label:'Custo do Produto', val:bd.custoProduto,    color:C.produto});
   if(bd.custoEmbalagem > 0)  segs.push({label:'Custo Embalagem',  val:bd.custoEmbalagem,  color:C.embalagem});
   if(bd.comissao > 0)        segs.push({label:'Comissão '+(r.platform==='shopee'?'Shopee':r.platform==='mercadolivre'?'ML':'TikTokShop'), val:bd.comissao, color:C.comissao});
   if(bd.taxaFixa > 0)        segs.push({label:'Taxa Fixa',        val:bd.taxaFixa,        color:C.taxaFixa});
+  if(bd.freteGratis > 0)     segs.push({label:'Taxa Frete Grátis',val:bd.freteGratis,     color:C.freteGratis});
   if(bd.aceleraTaxa > 0)     segs.push({label:'Shopee Acelera',   val:bd.aceleraTaxa,     color:C.acelera});
   if(bd.devolucaoTaxa > 0)   segs.push({label:'Devolução Fácil',  val:bd.devolucaoTaxa,   color:C.devolucao});
   if(bd.afiliado > 0)        segs.push({label:'Afiliados',        val:bd.afiliado,        color:C.afiliado});
